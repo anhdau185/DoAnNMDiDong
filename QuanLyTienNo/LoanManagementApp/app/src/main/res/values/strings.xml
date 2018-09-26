@@ -2,4 +2,8 @@
     <string name="app_name">Loan Management</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_about_us">About us</string>
+    <string name="add_new_loan">Thêm nợ mới</string>
+    <string name="loan_list">Danh sách nợ</string>
+    <string name="upcoming_payers">Ai sắp trả nợ?</string>
+    <string name="total_loan_amount">2,900,000</string>
 </resources>

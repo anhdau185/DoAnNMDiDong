@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        android.support.v7.widget.Toolbar mToolbar = findViewById(R.id.toolbar);
+        android.support.v7.widget.Toolbar mToolbar = findViewById(R.id.toolbarMain);
         setSupportActionBar(mToolbar);
     }
 
