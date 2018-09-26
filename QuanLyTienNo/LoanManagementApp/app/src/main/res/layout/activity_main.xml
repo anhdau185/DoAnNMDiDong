@@ -59,6 +59,10 @@
             android:text="@string/upcoming_payers" />
     </LinearLayout>
 
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="6dp"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
