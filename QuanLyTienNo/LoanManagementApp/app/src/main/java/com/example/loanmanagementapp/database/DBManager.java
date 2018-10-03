@@ -30,7 +30,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String INTEREST_RATE = "interest_rate";
     private static final String DATE = "date";
     private static final String INTEREST = "interest";
-    private static final String NOTE = "note";
+    private static final String DESCRIPTION = "description";
     private static final int VERSION = 1;
     private Context context;
 
@@ -43,7 +43,7 @@ public class DBManager extends SQLiteOpenHelper {
             INTEREST_RATE +" DOUBLE, "+
             DATE +" DATE, "+
             INTEREST +" DOUBLE, " +
-            NOTE +" TEXT)";
+            DESCRIPTION +" TEXT)";
 
     public DBManager(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -69,7 +69,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(INTEREST_RATE, debtor.getmInterest_rate());
         values.put(DATE, debtor.getmDate());
         values.put(INTEREST, debtor.getmInterest());
-        values.put(NOTE, debtor.getmNote());
+        values.put(DESCRIPTION, debtor.getmNote());
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
@@ -128,7 +128,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(INTEREST_RATE, debtor.getmInterest_rate());
         values.put(DATE, debtor.getmDate());
         values.put(INTEREST, debtor.getmInterest());
-        values.put(NOTE, debtor.getmNote());
+        values.put(DESCRIPTION, debtor.getmNote());
         db.close();
         return db.update(TABLE_NAME, values, ID +"=?", new String[]{String.valueOf(debtor.getmID())});
     }

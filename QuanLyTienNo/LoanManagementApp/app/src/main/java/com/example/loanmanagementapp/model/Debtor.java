@@ -13,7 +13,7 @@ public class Debtor {
     private double mInterest_rate;
     private String mDate;
     private double mInterest;
-    private String mNote;
+    private String mDescription;
 
     public Debtor() {
     }
@@ -83,11 +83,11 @@ public class Debtor {
     }
 
     public String getmNote() {
-        return mNote;
+        return mDescription;
     }
 
     public void setmNote(String mNote) {
-        this.mNote = mNote;
+        this.mDescription = mNote;
     }
 
     public Debtor(String mName, String mPhone, String mAddress, int mDebt, double mInterest_rate, String mDate, double mInterest, String mNote) {
@@ -98,7 +98,7 @@ public class Debtor {
         this.mInterest_rate = mInterest_rate;
         this.mDate = mDate;
         this.mInterest = mInterest;
-        this.mNote = mNote;
+        this.mDescription = mNote;
     }
 
     public Debtor(int mID, String mName, String mPhone, String mAddress, int mDebt, double mInterest_rate, String mDate, double mInterest, String mNote) {
@@ -110,6 +110,6 @@ public class Debtor {
         this.mInterest_rate = mInterest_rate;
         this.mDate = mDate;
         this.mInterest = mInterest;
-        this.mNote = mNote;
+        this.mDescription = mNote;
     }
 }

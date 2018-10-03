@@ -1,6 +1,8 @@
 package com.example.loanmanagementapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +24,7 @@ public class ListActivity extends AppCompatActivity{
     private CustomAdapter customAdapter;
     private ListView lvDebtor;
     public static int Id;
+    private FloatingActionButton mfbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,15 @@ public class ListActivity extends AppCompatActivity{
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        mfbtn = (FloatingActionButton) findViewById(R.id.list_add_btn);
+        mfbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToAddNewLoan = new Intent(ListActivity.this, AddNewLoanActivity.class);
+                startActivity(goToAddNewLoan);
+            }
+        });
 //        lvDebtor = (ListView) findViewById(R.id.lv_Debtor);
 //        listDebtor = dbManager.getAllDebtor();
 //        SetAdapter();
