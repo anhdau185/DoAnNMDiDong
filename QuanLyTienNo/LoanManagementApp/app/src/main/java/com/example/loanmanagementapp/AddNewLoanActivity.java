@@ -1,7 +1,11 @@
 package com.example.loanmanagementapp;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CursorAdapter;
@@ -13,7 +17,7 @@ import com.example.loanmanagementapp.model.Debtor;
 
 import java.util.List;
 
-public class AddNewLoanActivity extends AppCompatActivity{
+public class AddNewLoanActivity extends AppCompatActivity {
     private EditText edtName;
     private EditText edtPhone;
     private EditText edtAddress;
@@ -34,19 +38,32 @@ public class AddNewLoanActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_loan);
 
-        Initialize();
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Debtor debtor = createDebtor();
-                if(debtor != null) {
-                    dbManager.addDebtor(debtor);
-                }
-            }
-        });
+        android.support.v7.widget.Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_addNewLoan);
+        setSupportActionBar(mToolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+//        Initialize();
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Debtor debtor = createDebtor();
+//                if(debtor != null) {
+//                    dbManager.addDebtor(debtor);
+//                }
+//            }
+//        });
     }
-    private void Initialize()
-    {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mMenuInflater = getMenuInflater();
+        mMenuInflater.inflate(R.menu.add_new_loan_menu, menu);
+        return true;
+    }
+
+    private void Initialize() {
 //        dbManager = new DBManager(this);
 //        edtName = (EditText) findViewById(R.id.edt_Name);
 //        edtPhone = (EditText) findViewById(R.id.edt_Phone);
@@ -59,8 +76,8 @@ public class AddNewLoanActivity extends AppCompatActivity{
 //        btnSave = (Button) findViewById(R.id.btn_Save);
 //        btnCancel = (Button) findViewById(R.id.btn_Cancle);
     }
-    private Debtor createDebtor()
-    {
+
+    private Debtor createDebtor() {
         String name = edtName.getText().toString();
         String phone = edtPhone.getText().toString();
         String address = edtAddress.getText().toString();
@@ -70,11 +87,11 @@ public class AddNewLoanActivity extends AppCompatActivity{
         Double interest = Double.valueOf(edtInterest.getText().toString());
         String note = edtNote.getText().toString();
 
-        Debtor debtor= new Debtor(name, phone, address, debt, interest_rate, date, interest, note);
+        Debtor debtor = new Debtor(name, phone, address, debt, interest_rate, date, interest, note);
         return debtor;
     }
-    private void EditById(int id)
-    {
+
+    private void EditById(int id) {
         dbManager = new DBManager(this);
         Debtor debtor = dbManager.getById(ListActivity.Id);
         edtName.setText(debtor.getmName());

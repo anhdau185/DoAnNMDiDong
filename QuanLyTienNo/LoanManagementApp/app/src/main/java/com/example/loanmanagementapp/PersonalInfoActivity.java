@@ -1,7 +1,9 @@
 package com.example.loanmanagementapp;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.TextView;
@@ -25,12 +27,17 @@ public class PersonalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
 
+        android.support.v7.widget.Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_PersonalInfo);
+        setSupportActionBar(mToolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater mMenuInflater = getMenuInflater();
-        mMenuInflater.inflate(R.menu.add_new_loan_menu, menu);
+        mMenuInflater.inflate(R.menu.personal_info_menu, menu);
         return true;
     }
 
