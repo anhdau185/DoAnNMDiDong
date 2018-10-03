@@ -36,9 +36,12 @@ public class CustomAdapter extends ArrayAdapter<Debtor> {
             viewHolder.tvDebt = (TextView)convertView.findViewById(R.id.tv_Debt);
             convertView.setTag(viewHolder);
         }else{
-
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        return super.getView(position, convertView, parent);
+        Debtor debtor = listDebtor.get(position);
+        viewHolder.tvName.setText(debtor.getmName());
+        viewHolder.tvDebt.setText(String.valueOf(debtor.getmDate()));
+        return convertView;
     }
 
     public class ViewHolder{

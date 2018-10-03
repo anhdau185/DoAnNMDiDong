@@ -1,5 +1,9 @@
 package com.example.loanmanagementapp.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Debtor {
     private int mID;
     private String mName;
@@ -9,29 +13,9 @@ public class Debtor {
     private double mInterest_rate;
     private String mDate;
     private double mInterest;
+    private String mNote;
 
     public Debtor() {
-    }
-
-    public Debtor(int mID, String mName, String mPhone, String mAddress, int mDebt, double mInterest_rate, String mDate, double mInterest) {
-        this.mID = mID;
-        this.mName = mName;
-        this.mPhone = mPhone;
-        this.mAddress = mAddress;
-        this.mDebt = mDebt;
-        this.mInterest_rate = mInterest_rate;
-        this.mDate = mDate;
-        this.mInterest = mInterest;
-    }
-
-    public Debtor(String mName, String mPhone, String mAddress, int mDebt, double mInterest_rate, String mDate, double mInterest) {
-        this.mName = mName;
-        this.mPhone = mPhone;
-        this.mAddress = mAddress;
-        this.mDebt = mDebt;
-        this.mInterest_rate = mInterest_rate;
-        this.mDate = mDate;
-        this.mInterest = mInterest;
     }
 
     public int getmID() {
@@ -96,5 +80,36 @@ public class Debtor {
 
     public void setmInterest(double mInterest) {
         this.mInterest = mInterest;
+    }
+
+    public String getmNote() {
+        return mNote;
+    }
+
+    public void setmNote(String mNote) {
+        this.mNote = mNote;
+    }
+
+    public Debtor(String mName, String mPhone, String mAddress, int mDebt, double mInterest_rate, String mDate, double mInterest, String mNote) {
+        this.mName = mName;
+        this.mPhone = mPhone;
+        this.mAddress = mAddress;
+        this.mDebt = mDebt;
+        this.mInterest_rate = mInterest_rate;
+        this.mDate = mDate;
+        this.mInterest = mInterest;
+        this.mNote = mNote;
+    }
+
+    public Debtor(int mID, String mName, String mPhone, String mAddress, int mDebt, double mInterest_rate, String mDate, double mInterest, String mNote) {
+        this.mID = mID;
+        this.mName = mName;
+        this.mPhone = mPhone;
+        this.mAddress = mAddress;
+        this.mDebt = mDebt;
+        this.mInterest_rate = mInterest_rate;
+        this.mDate = mDate;
+        this.mInterest = mInterest;
+        this.mNote = mNote;
     }
 }

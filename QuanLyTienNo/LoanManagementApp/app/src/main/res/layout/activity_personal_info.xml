@@ -14,7 +14,7 @@
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="Thông tin nợ"/>
+        app:title=""/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,12 +30,14 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/persional_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NAME"
                 android:textSize="30sp" />
 
             <TextView
+                android:id="@+id/persional_debt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="300,000"
