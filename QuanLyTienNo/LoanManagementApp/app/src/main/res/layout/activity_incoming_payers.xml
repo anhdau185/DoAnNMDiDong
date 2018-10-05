@@ -15,10 +15,10 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:title="Các khoản nợ đáo hạn"
-        app:titleTextColor="#FFFFFF" />
+        app:titleTextColor="@color/white" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/incomingPayers_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 </LinearLayout>

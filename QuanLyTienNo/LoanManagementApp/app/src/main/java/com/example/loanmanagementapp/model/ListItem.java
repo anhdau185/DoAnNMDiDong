@@ -2,14 +2,14 @@ package com.example.loanmanagementapp.model;
 
 public class ListItem {
     private String name;
-    private int loanAmount;
+    private String loanAmount;
 
     public ListItem() {
         this.name = "";
-        this.loanAmount = 0;
+        this.loanAmount = "";
     }
 
-    public ListItem(String name, int loanAmount) {
+    public ListItem(String name, String loanAmount) {
         this.name = name;
         this.loanAmount = loanAmount;
     }
@@ -18,7 +18,7 @@ public class ListItem {
         return name;
     }
 
-    public int getLoanAmount() {
+    public String getLoanAmount() {
         return loanAmount;
     }
 }
