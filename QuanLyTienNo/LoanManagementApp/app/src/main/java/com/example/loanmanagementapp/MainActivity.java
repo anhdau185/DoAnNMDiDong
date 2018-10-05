@@ -12,13 +12,15 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     Button btnAddLoan;
-    Button btnListLoan;
+    Button btnLoanList;
+    Button btnIncomingPayers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        android.support.v7.widget.Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarMain);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(mToolbar);
 
         btnAddLoan = (Button) findViewById(R.id.add_loan_btn);
@@ -30,12 +32,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnListLoan = (Button) findViewById(R.id.list_loan_btn);
-        btnListLoan.setOnClickListener(new View.OnClickListener() {
+        btnLoanList = (Button) findViewById(R.id.list_loan_btn);
+        btnLoanList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent goToList = new Intent(MainActivity.this, ListActivity.class);
                 startActivity(goToList);
+            }
+        });
+
+        btnIncomingPayers = (Button) findViewById(R.id.incoming_payers_btn);
+        btnIncomingPayers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToIncomingPayers = new Intent(MainActivity.this, IncomingPayersActivity.class);
+                startActivity(goToIncomingPayers);
             }
         });
     }

@@ -33,9 +33,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mMenuInflater = getMenuInflater();
         mMenuInflater.inflate(R.menu.personal_info_menu, menu);
         return true;
@@ -44,8 +44,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private void Initialize() {
         dbManager = new DBManager(this);
         Debtor debtor = dbManager.getById(ListActivity.Id);
-        tvName = (TextView) findViewById(R.id.persional_name);
-        tvDebt = (TextView) findViewById(R.id.persional_debt);
+        tvName = (TextView) findViewById(R.id.debtor_name);
+        tvDebt = (TextView) findViewById(R.id.loan_amount);
         tvName.setText(debtor.getmName());
         tvDebt.setText(debtor.getmDebt());
         tvAddress.setText(debtor.getmAddress());
