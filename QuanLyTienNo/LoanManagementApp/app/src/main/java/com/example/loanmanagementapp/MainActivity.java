@@ -8,19 +8,21 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.loanmanagementapp.database.DBManager;
 
 public class MainActivity extends AppCompatActivity {
-
+    private TextView tvSumDebt;
+    private DBManager dbManager;
     Button btnAddLoan;
-    Button btnLoanList;
-    Button btnIncomingPayers;
-
+    Button btnListLoan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarMain);
+        android.support.v7.widget.Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(mToolbar);
 
         btnAddLoan = (Button) findViewById(R.id.add_loan_btn);
@@ -32,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnLoanList = (Button) findViewById(R.id.list_loan_btn);
-        btnLoanList.setOnClickListener(new View.OnClickListener() {
+        btnListLoan = (Button) findViewById(R.id.list_loan_btn);
+        btnListLoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent goToList = new Intent(MainActivity.this, ListActivity.class);
@@ -41,14 +43,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnIncomingPayers = (Button) findViewById(R.id.incoming_payers_btn);
-        btnIncomingPayers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToIncomingPayers = new Intent(MainActivity.this, IncomingPayersActivity.class);
-                startActivity(goToIncomingPayers);
-            }
-        });
+        Initialize();
     }
 
     @Override
@@ -57,5 +52,11 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater mMenuInflater = getMenuInflater();
         mMenuInflater.inflate(R.menu.app_menu, menu);
         return true;
+    }
+
+    private void Initialize(){
+        dbManager = new DBManager(this);
+        tvSumDebt = (TextView) findViewById(R.id.main_sum_debt);
+        tvSumDebt.setText(String.valueOf(dbManager.sumOfDebt()));
     }
 }

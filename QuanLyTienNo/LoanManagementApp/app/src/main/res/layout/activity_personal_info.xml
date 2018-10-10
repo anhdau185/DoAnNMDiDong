@@ -39,7 +39,7 @@
                 android:textSize="28sp" />
 
             <TextView
-                android:id="@+id/loan_amount"
+                android:id="@+id/debtor_debt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="300,000"
@@ -63,6 +63,7 @@
         android:weightSum="3">
 
         <Button
+            android:id="@+id/debtor_add_debt_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -70,6 +71,7 @@
             android:text="Thêm nợ" />
 
         <Button
+            android:id="@+id/debtor_pay_debt_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

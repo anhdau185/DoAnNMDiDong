@@ -12,11 +12,8 @@ public class Debtor {
     private int mDebt;
     private double mInterest_rate;
     private String mDate;
-    private double mInterest;
+    private String mInterest_date;
     private String mDescription;
-
-    public Debtor() {
-    }
 
     public int getmID() {
         return mID;
@@ -74,34 +71,37 @@ public class Debtor {
         this.mDate = mDate;
     }
 
-    public double getmInterest() {
-        return mInterest;
+    public String getmInterest_date() {
+        return mInterest_date;
     }
 
-    public void setmInterest(double mInterest) {
-        this.mInterest = mInterest;
+    public void setmInterest_date(String mInterest_date) {
+        this.mInterest_date = mInterest_date;
     }
 
-    public String getmNote() {
+    public String getmDescription() {
         return mDescription;
     }
 
-    public void setmNote(String mNote) {
-        this.mDescription = mNote;
+    public void setmDescription(String mDescription) {
+        this.mDescription = mDescription;
     }
 
-    public Debtor(String mName, String mPhone, String mAddress, int mDebt, double mInterest_rate, String mDate, double mInterest, String mNote) {
+    public Debtor() {
+    }
+
+    public Debtor(String mName, String mPhone, String mAddress, int mDebt, double mInterest_rate, String mDate, String mInterest_date, String mDescription) {
         this.mName = mName;
         this.mPhone = mPhone;
         this.mAddress = mAddress;
         this.mDebt = mDebt;
         this.mInterest_rate = mInterest_rate;
         this.mDate = mDate;
-        this.mInterest = mInterest;
-        this.mDescription = mNote;
+        this.mInterest_date = mInterest_date;
+        this.mDescription = mDescription;
     }
 
-    public Debtor(int mID, String mName, String mPhone, String mAddress, int mDebt, double mInterest_rate, String mDate, double mInterest, String mNote) {
+    public Debtor(int mID, String mName, String mPhone, String mAddress, int mDebt, double mInterest_rate, String mDate, String mInterest_date, String mDescription) {
         this.mID = mID;
         this.mName = mName;
         this.mPhone = mPhone;
@@ -109,7 +109,11 @@ public class Debtor {
         this.mDebt = mDebt;
         this.mInterest_rate = mInterest_rate;
         this.mDate = mDate;
-        this.mInterest = mInterest;
-        this.mDescription = mNote;
+        this.mInterest_date = mInterest_date;
+        this.mDescription = mDescription;
     }
+
+
+
+
 }

@@ -22,7 +22,7 @@ public class CustomAdapter extends ArrayAdapter<Debtor> {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
-        this.listDebtor =objects;
+        this.listDebtor = objects;
     }
 
     @NonNull
@@ -40,7 +40,7 @@ public class CustomAdapter extends ArrayAdapter<Debtor> {
         }
         Debtor debtor = listDebtor.get(position);
         viewHolder.tvName.setText(debtor.getmName());
-        viewHolder.tvDebt.setText(String.valueOf(debtor.getmDate()));
+        viewHolder.tvDebt.setText(String.valueOf(debtor.getmDebt()));
         return convertView;
     }
 
