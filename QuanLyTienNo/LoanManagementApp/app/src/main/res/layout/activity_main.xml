@@ -52,8 +52,9 @@
             android:layout_height="120dp"
             android:layout_weight="1"
             android:background="@drawable/customized_button_2"
-            android:text="@string/add_new_loan" />
-        <!--android:drawableTop="@drawable/ic_action_add_dark"/>-->
+            android:drawableTop="@drawable/ic_action_add_dark"
+            android:text="@string/add_new_loan"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/list_loan_btn"
@@ -62,8 +63,9 @@
             android:layout_gravity="bottom"
             android:layout_weight="1"
             android:background="@drawable/customized_button_2"
-            android:text="@string/loan_list" />
-        <!--android:drawableTop="@drawable/ic_action_library_books_dark"-->
+            android:drawableTop="@drawable/ic_action_library_books_dark"
+            android:text="@string/loan_list"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/incoming_payers_btn"
@@ -71,12 +73,20 @@
             android:layout_height="120dp"
             android:layout_weight="1"
             android:background="@drawable/customized_button_2"
-            android:text="@string/upcoming_payers" />
-        <!--android:drawableTop="@drawable/ic_action_checked_list_dark"-->
+            android:drawableTop="@drawable/ic_action_checked_list_dark"
+            android:text="@string/upcoming_payers"
+            android:textAllCaps="false" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+
+        android:text="Trả nợ hôm nay"
+        android:textSize="14sp" />
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="6dp" />
+        android:layout_height="match_parent" />
 </LinearLayout>

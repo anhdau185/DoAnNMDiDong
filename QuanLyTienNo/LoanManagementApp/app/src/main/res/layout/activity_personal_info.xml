@@ -15,7 +15,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="Thông tin khoản nợ"
+        app:title="Thông tin nợ"
         app:titleTextColor="@color/white" />
 
     <LinearLayout
@@ -79,6 +79,7 @@
             android:text="Trừ nợ" />
 
         <Button
+            android:id="@+id/contact_debtor_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

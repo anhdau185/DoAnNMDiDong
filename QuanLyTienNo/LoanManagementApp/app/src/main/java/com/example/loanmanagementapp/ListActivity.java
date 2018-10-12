@@ -19,18 +19,21 @@ import android.widget.Toast;
 import com.example.loanmanagementapp.adapter.CustomAdapter;
 import com.example.loanmanagementapp.database.DBManager;
 import com.example.loanmanagementapp.model.Debtor;
+import com.example.loanmanagementapp.model.SortBottomSheetDialogFragment;
 
 import java.util.List;
 
 import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
-public class ListActivity extends AppCompatActivity{
+public class ListActivity extends AppCompatActivity {
     private List<Debtor> listDebtor;
     private DBManager dbManager;
     private CustomAdapter customAdapter;
     private ListView lvDebtor;
     public static int Id = -1;
     private FloatingActionButton mfbtn;
+    private MenuItem item;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,23 +78,35 @@ public class ListActivity extends AppCompatActivity{
         });
         registerForContextMenu(lvDebtor);
     }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mMenuInflater = getMenuInflater();
         mMenuInflater.inflate(R.menu.list_menu, menu);
         return true;
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_sort:
+                SortBottomSheetDialogFragment sheet = new SortBottomSheetDialogFragment();
+                sheet.show(getSupportFragmentManager(), "list_sort_action");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo
+            menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         getMenuInflater().inflate(R.menu.list_context_menu, menu);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_edit_info:
                 Intent goToAddNewLoan = new Intent(ListActivity.this, AddNewLoanActivity.class);
                 startActivity(goToAddNewLoan);
@@ -99,7 +114,7 @@ public class ListActivity extends AppCompatActivity{
                 break;
             case R.id.action_delete:
 //                Log.d("Delete: ", Id+"");
-                if(dbManager.deleteDebtor(Id)) {
+                if (dbManager.deleteDebtor(Id)) {
                     Toast.makeText(ListActivity.this, "Xóa thành công!", Toast.LENGTH_LONG).show();
                     listDebtor.clear();
                     listDebtor.addAll(dbManager.getAllDebtorNameASC());
@@ -114,17 +129,16 @@ public class ListActivity extends AppCompatActivity{
         return super.onContextItemSelected(item);
     }
 
-    public void SetAdapter(){
-        if(customAdapter == null){
+    public void SetAdapter() {
+        if (customAdapter == null) {
             customAdapter = new CustomAdapter(this, R.layout.item_list_debtor, listDebtor);
             lvDebtor.setAdapter(customAdapter);
-        }
-        else{
-            lvDebtor.setSelection(customAdapter.getCount()-1);
+        } else {
+            lvDebtor.setSelection(customAdapter.getCount() - 1);
         }
     }
 
-    private void Initialize(){
+    private void Initialize() {
         dbManager = new DBManager(this);
         lvDebtor = findViewById(R.id.list_lv);
     }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.loanmanagementapp.database.DBManager;
+import com.example.loanmanagementapp.model.ContactBottomSheetDialogFragment;
 import com.example.loanmanagementapp.model.Debtor;
 
 import java.text.ParseException;
@@ -35,6 +36,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private final int ID = ListActivity.Id;
     Button btnAddDebt;
     Button btnPayDebt;
+    private Button btnContactDebtor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +64,15 @@ public class PersonalInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 payDebtAndInterest(ID);
                 initialize();
+            }
+        });
+
+        btnContactDebtor = (Button) findViewById(R.id.contact_debtor_btn);
+        btnContactDebtor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContactBottomSheetDialogFragment sheet = new ContactBottomSheetDialogFragment();
+                sheet.show(getSupportFragmentManager(), "contact_debtor");
             }
         });
     }

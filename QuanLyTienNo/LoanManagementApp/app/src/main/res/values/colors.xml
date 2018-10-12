@@ -6,7 +6,8 @@
     <color name="floatingActionButtonColor">#f2488d</color>
     <color name="white">#ffffff</color>
     <color name="silver">#C0C0C0</color>
-    <color name="lightGrey">#cccccc</color>
+    <color name="lightGrey">#e8e8e8</color>
     <color name="lightGreyBackground">#fafafa</color>
+    <color name="textGrey">#969696</color>
     <color name="black">#000000</color>
 </resources>
