@@ -8,7 +8,9 @@
         android:icon="@drawable/ic_action_search"
         android:title="Tìm kiếm"
         app:showAsAction="always"
-        tools:ignore="AlwaysShowAction" />
+        tools:ignore="AlwaysShowAction"
+        app:actionViewClass="android.widget.SearchView"
+        />
     <item
         android:id="@+id/action_sort"
         android:icon="@drawable/ic_action_sort"

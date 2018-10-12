@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.example.loanmanagementapp.database.DBManager;
 import com.example.loanmanagementapp.model.Debtor;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -96,6 +99,31 @@ public class AddNewLoanActivity extends AppCompatActivity{
         edtPhone = findViewById(R.id.add_loan_phone);
         edtAddress = findViewById(R.id.add_loan_address);
         edtDebt = findViewById(R.id.add_loan_loan_amount);
+        edtDebt.addTextChangedListener(new TextWatcher() {
+            private String current = " ";
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().equals("")) {
+                    if (!s.toString().equals(current)) {
+                        String cleanString = s.toString().replaceAll("[,.]", "");
+                        double parsed = Double.parseDouble(cleanString);
+                        String formated = NumberFormat.getInstance().format((parsed));
+                        current = formated;
+                        edtDebt.setText(formated);
+                        edtDebt.setSelection(formated.length());
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
         edtInterest_rate = findViewById(R.id.add_loan_interest_rate);
         edtDate = findViewById(R.id.add_loan_date);
         edtDescription = findViewById(R.id.add_loan_description);
@@ -105,7 +133,8 @@ public class AddNewLoanActivity extends AppCompatActivity{
         String name = edtName.getText().toString();
         String phone = edtPhone.getText().toString();
         String address = edtAddress.getText().toString();
-        Integer debt = Integer.valueOf(edtDebt.getText().toString());
+        String strDebt = (edtDebt.getText().toString()).replaceAll("[,.]","");
+        Integer debt = Integer.valueOf(strDebt);
         Double interest_rate = Double.valueOf(edtInterest_rate.getText().toString());
         String date = edtDate.getText().toString();
         String description = edtDescription.getText().toString();

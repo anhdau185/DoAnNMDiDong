@@ -1,16 +1,18 @@
 package com.example.loanmanagementapp.model;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.*;
 import android.widget.TextView;
 
+import com.example.loanmanagementapp.ListActivity;
 import com.example.loanmanagementapp.R;
 
 public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
     private TextView ascAlphabeticalSort, descAlphabeticalSort, ascSortByLoanAmount, descSortByLoanAmount;
-
+    public static int sortStyle = -1;
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -22,7 +24,8 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
         ascAlphabeticalSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                sortStyle = 1;
+                startActivity(new Intent(getActivity(), ListActivity.class));
             }
         });
 
@@ -30,7 +33,8 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
         descAlphabeticalSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                sortStyle = 2;
+                startActivity(new Intent(getActivity(), ListActivity.class));
             }
         });
 
@@ -38,7 +42,8 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
         ascSortByLoanAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                sortStyle = 3;
+                startActivity(new Intent(getActivity(), ListActivity.class));
             }
         });
 
@@ -46,7 +51,8 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
         descSortByLoanAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                sortStyle = 4;
+                startActivity(new Intent(getActivity(), ListActivity.class));
             }
         });
 

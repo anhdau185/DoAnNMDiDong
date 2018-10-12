@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.loanmanagementapp.R;
 import com.example.loanmanagementapp.model.Debtor;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CustomAdapter extends ArrayAdapter<Debtor> {
@@ -40,7 +41,8 @@ public class CustomAdapter extends ArrayAdapter<Debtor> {
         }
         Debtor debtor = listDebtor.get(position);
         viewHolder.tvName.setText(debtor.getmName());
-        viewHolder.tvDebt.setText(String.valueOf(debtor.getmDebt()));
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+        viewHolder.tvDebt.setText(String.valueOf(formatter.format(debtor.getmDebt())));
         return convertView;
     }
 

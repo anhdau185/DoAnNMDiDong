@@ -14,6 +14,7 @@ import com.example.loanmanagementapp.ListActivity;
 import com.example.loanmanagementapp.model.Debtor;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -238,5 +239,74 @@ public class DBManager extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return debtor;
+    }
+    public int[] getIdByName(String name)
+    {
+        int ID[] = new int[0];
+        String query = "SELECT ID FROM DEBTORS WHERE NAME LIKE"  + '"' + name + "%"+'"' + "ORDER BY NAME ASC";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.moveToFirst()) {
+            do {
+                int[] temp = new int[ID.length];
+                System.arraycopy(ID, 0, temp, 0, ID.length);
+                ID = new int[ID.length+1];
+                System.arraycopy(temp, 0, ID, 0, temp.length);
+                ID[temp.length] = cursor.getInt(0);
+            } while (cursor.moveToNext());
+        }
+        return ID;
+    }
+    public double calculateInterest(Debtor debtor)
+    {
+        Calendar calendar = Calendar.getInstance();
+        Date toDay = calendar.getTime();
+        String date = debtor.getmDate();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date interest = new Date();
+        try {
+            interest = simpleDateFormat.parse(date);
+        }
+        catch(ParseException e)
+        {
+            e.printStackTrace();
+        }
+        long totalDay = (toDay.getTime() - interest.getTime())/(24*3600*1000);
+        double interestRate = debtor.getmInterest_rate()/100/365 * debtor.getmDebt() * totalDay;
+        return Math.round(interestRate*10)/10;
+    }
+    public List<Debtor> notifyDebtor()
+    {
+        List<Debtor> ListDebtor = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_NAME +" ORDER BY " + DEBT + " ASC";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if(cursor.moveToFirst()){
+            do{
+                Debtor debtor = new Debtor();
+                debtor.setmID(cursor.getInt(0));
+                debtor.setmName(cursor.getString(1));
+                debtor.setmPhone(cursor.getString(2));
+                debtor.setmAddress(cursor.getString(3));
+                debtor.setmDebt(cursor.getInt(4));
+                debtor.setmInterest_rate(cursor.getDouble(5));
+                debtor.setmDate(cursor.getString(6));
+                debtor.setmInterest_date(cursor.getString(7));
+                debtor.setmDescription(cursor.getString(8));
+                debtor.setmDebt((int)Math.round(calculateInterest(debtor)));
+
+                Calendar calendar = Calendar.getInstance();
+                int today = calendar.get(Calendar.DATE);
+                if(debtor.getmDate().length() >5)
+                {
+                    Log.d("Check:", debtor.getmName() + debtor.getmDate().substring(0,2));
+                    if(today == Integer.valueOf(debtor.getmDate().substring(0,2)))
+                        ListDebtor.add(debtor);
+                }
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return ListDebtor;
     }
 }
