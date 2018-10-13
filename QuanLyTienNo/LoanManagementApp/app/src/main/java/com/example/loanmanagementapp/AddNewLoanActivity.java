@@ -23,7 +23,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class AddNewLoanActivity extends AppCompatActivity{
+public class AddNewLoanActivity extends AppCompatActivity {
     private EditText edtName;
     private EditText edtPhone;
     private EditText edtAddress;
@@ -34,7 +34,6 @@ public class AddNewLoanActivity extends AppCompatActivity{
     private EditText edtDescription;
     private DBManager dbManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +43,7 @@ public class AddNewLoanActivity extends AppCompatActivity{
         setSupportActionBar(mToolbar);
 
         Initialize();
-        if(ListActivity.Id >= 0)
-        {
+        if (ListActivity.Id >= 0) {
             initializeEditDebtor(ListActivity.Id);
         }
         edtDate.setOnClickListener(new View.OnClickListener() {
@@ -55,32 +53,30 @@ public class AddNewLoanActivity extends AppCompatActivity{
             }
         });
     }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mMenuInflater = getMenuInflater();
         mMenuInflater.inflate(R.menu.add_new_loan_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.action_cancel:
                 ListActivity.Id = -1;
                 finish();
                 return true;
             case R.id.action_save:
                 Debtor debtor = createDebtor();
-                if(ListActivity.Id == -1) {
+                if (ListActivity.Id == -1) {
                     if (debtor != null) {
                         dbManager.addDebtor(debtor);
                         Toast.makeText(AddNewLoanActivity.this, "Thêm thành công!", Toast.LENGTH_LONG).show();
                     }
-                }
-                else {
-                    if(debtor!=null) {
+                } else {
+                    if (debtor != null) {
 //                        Log.d("update:", "ready");
                         if (dbManager.UpdateDebtor(debtor))
                             Toast.makeText(AddNewLoanActivity.this, "Chỉnh sửa thành công!", Toast.LENGTH_LONG).show();
@@ -89,11 +85,12 @@ public class AddNewLoanActivity extends AppCompatActivity{
                 Intent goToList = new Intent(AddNewLoanActivity.this, ListActivity.class);
                 startActivity(goToList);
                 return true;
-            default: return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
-    private void Initialize()
-    {
+
+    private void Initialize() {
         dbManager = new DBManager(this);
         edtName = findViewById(R.id.add_loan_name);
         edtPhone = findViewById(R.id.add_loan_phone);
@@ -101,6 +98,7 @@ public class AddNewLoanActivity extends AppCompatActivity{
         edtDebt = findViewById(R.id.add_loan_loan_amount);
         edtDebt.addTextChangedListener(new TextWatcher() {
             private String current = " ";
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -128,25 +126,24 @@ public class AddNewLoanActivity extends AppCompatActivity{
         edtDate = findViewById(R.id.add_loan_date);
         edtDescription = findViewById(R.id.add_loan_description);
     }
-    private Debtor createDebtor()
-    {
+
+    private Debtor createDebtor() {
         String name = edtName.getText().toString();
         String phone = edtPhone.getText().toString();
         String address = edtAddress.getText().toString();
-        String strDebt = (edtDebt.getText().toString()).replaceAll("[,.]","");
+        String strDebt = (edtDebt.getText().toString()).replaceAll("[,.]", "");
         Integer debt = Integer.valueOf(strDebt);
         Double interest_rate = Double.valueOf(edtInterest_rate.getText().toString());
         String date = edtDate.getText().toString();
         String description = edtDescription.getText().toString();
-        Debtor debtor= new Debtor(name, phone, address, debt, interest_rate, date, "", description);
+        Debtor debtor = new Debtor(name, phone, address, debt, interest_rate, date, "", description);
         return debtor;
     }
 
-    private void initializeEditDebtor(int id)
-    {
+    private void initializeEditDebtor(int id) {
         dbManager = new DBManager(this);
         Debtor debtor = dbManager.getDebtorById(id);
-        Log.d("Edit: ", "id:" +id);
+        Log.d("Edit: ", "id:" + id);
         edtName.setText(debtor.getmName());
         edtName.setEnabled(false);
         edtDebt.setText(String.valueOf(debtor.getmDebt()));
@@ -159,8 +156,8 @@ public class AddNewLoanActivity extends AppCompatActivity{
         edtDescription.setText(debtor.getmDescription());
         dbManager.close();
     }
-    private void selectDate()
-    {
+
+    private void selectDate() {
         final Calendar calendar = Calendar.getInstance();
         int mDay = calendar.get(Calendar.DATE);
         int mMonth = calendar.get(Calendar.MONTH);

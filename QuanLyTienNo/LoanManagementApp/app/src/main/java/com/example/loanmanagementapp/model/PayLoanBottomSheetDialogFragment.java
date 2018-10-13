@@ -1,21 +1,20 @@
 package com.example.loanmanagementapp.model;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.TextView;
 
 import com.example.loanmanagementapp.PersonalInfoActivity;
 import com.example.loanmanagementapp.R;
 
-public class ContactBottomSheetDialogFragment extends BottomSheetDialogFragment {
-    TextView makeACall, sendSmsMessage;
+public class PayLoanBottomSheetDialogFragment extends BottomSheetDialogFragment {
+    TextView payInterestOnly, payLoanAndInterest;
     PersonalInfoActivity person;
 
-    public void setPerson (PersonalInfoActivity p){
+    public void setPerson(PersonalInfoActivity p) {
         this.person = p;
     }
 
@@ -23,29 +22,30 @@ public class ContactBottomSheetDialogFragment extends BottomSheetDialogFragment 
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.personal_info_contact_debtor, container, false);
+        View v = inflater.inflate(R.layout.personal_info_pay_loan, container, false);
 
         // attach the listener here
-        makeACall = (TextView) v.findViewById(R.id.tv_make_a_call);
-        makeACall.setOnClickListener(new View.OnClickListener() {
+        payInterestOnly = (TextView) v.findViewById(R.id.tv_pay_interest_only);
+        payInterestOnly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
-                // call the debtor here
-
+                person.payInterest();
             }
         });
 
-        sendSmsMessage = (TextView) v.findViewById(R.id.tv_send_sms_message);
-        sendSmsMessage.setOnClickListener(new View.OnClickListener() {
+        payLoanAndInterest = (TextView) v.findViewById(R.id.tv_pay_loan_and_interest);
+        payLoanAndInterest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
-                // send an SMS message to the debtor here
-
+                person.payDebtAndInterest();
             }
         });
-
         return v;
+    }
+
+    public void onDismiss(DialogInterface dialog) {
+
     }
 }

@@ -12,7 +12,9 @@ import com.example.loanmanagementapp.R;
 
 public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
     private TextView ascAlphabeticalSort, descAlphabeticalSort, ascSortByLoanAmount, descSortByLoanAmount;
+
     public static int sortStyle = -1;
+
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -24,6 +26,7 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
         ascAlphabeticalSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 sortStyle = 1;
                 startActivity(new Intent(getActivity(), ListActivity.class));
             }
@@ -33,6 +36,7 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
         descAlphabeticalSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 sortStyle = 2;
                 startActivity(new Intent(getActivity(), ListActivity.class));
             }
@@ -42,6 +46,7 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
         ascSortByLoanAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 sortStyle = 3;
                 startActivity(new Intent(getActivity(), ListActivity.class));
             }
@@ -51,6 +56,7 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
         descSortByLoanAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 sortStyle = 4;
                 startActivity(new Intent(getActivity(), ListActivity.class));
             }

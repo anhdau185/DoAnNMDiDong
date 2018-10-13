@@ -28,11 +28,11 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout btnListLoan;
     List<Debtor> listDebtor;
     CustomAdapter customAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         android.support.v7.widget.Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(mToolbar);
 
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         tvSumDebt.setText(String.valueOf(formatter.format(dbManager.sumOfDebt())));
     }
+
     public void SetAdapter(){
         listDebtor = dbManager.notifyDebtor();
         if(customAdapter == null){

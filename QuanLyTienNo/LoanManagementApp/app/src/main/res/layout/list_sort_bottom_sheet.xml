@@ -9,7 +9,7 @@
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:gravity="center_vertical"
-        android:text="Sắp xếp"
+        android:text="Sắp xếp theo"
         android:textColor="@android:color/tertiary_text_dark"
         android:textSize="16sp" />
 

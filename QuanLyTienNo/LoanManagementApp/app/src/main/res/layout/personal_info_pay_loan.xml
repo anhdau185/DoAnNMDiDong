@@ -14,7 +14,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tv_pay_interest"
+        android:id="@+id/tv_pay_interest_only"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
@@ -28,7 +28,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tv_pay_loan_interest"
+        android:id="@+id/tv_pay_loan_and_interest"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginStart="32dp"

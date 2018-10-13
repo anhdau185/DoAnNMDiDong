@@ -21,6 +21,5 @@
         <activity android:name=".AddNewLoanActivity" android:parentActivityName=".MainActivity"/>
         <activity android:name=".ListActivity" android:parentActivityName=".MainActivity"/>
         <activity android:name=".PersonalInfoActivity" android:parentActivityName=".ListActivity"/>
-        <activity android:name=".IncomingPayersActivity" android:parentActivityName=".MainActivity"/>
     </application>
 </manifest>
