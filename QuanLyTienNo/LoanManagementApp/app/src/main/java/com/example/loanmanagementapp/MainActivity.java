@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvSumDebt;
     private DBManager dbManager;
     ListView lvNotify;
-    Button btnAddLoan;
-    Button btnListLoan;
+    LinearLayout btnAddLoan;
+    LinearLayout btnListLoan;
     List<Debtor> listDebtor;
     CustomAdapter customAdapter;
     @Override
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         android.support.v7.widget.Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(mToolbar);
 
-        btnAddLoan = (Button) findViewById(R.id.add_loan_btn);
+        btnAddLoan = (LinearLayout) findViewById(R.id.add_loan_button);
         btnAddLoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnListLoan = (Button) findViewById(R.id.list_loan_btn);
+        btnListLoan = (LinearLayout) findViewById(R.id.loan_list_button);
         btnListLoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

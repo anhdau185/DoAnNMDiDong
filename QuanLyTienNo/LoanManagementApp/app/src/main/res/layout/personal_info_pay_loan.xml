@@ -14,24 +14,28 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/asc_alphabetical_sort"
+        android:id="@+id/tv_pay_interest"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:backgroundTint="@android:color/white"
+        android:clickable="true"
         android:drawablePadding="24dp"
+        android:focusable="true"
         android:gravity="center_vertical"
         android:text="Trừ lãi"
         android:textColor="@color/black"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/desc_alphabetical_sort"
+        android:id="@+id/tv_pay_loan_interest"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:backgroundTint="@android:color/white"
+        android:clickable="true"
         android:drawablePadding="24dp"
+        android:focusable="true"
         android:gravity="center_vertical"
         android:text="Trừ tiền gốc + lãi"
         android:textColor="@color/black"

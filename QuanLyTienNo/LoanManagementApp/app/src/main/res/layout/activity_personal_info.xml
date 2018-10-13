@@ -15,7 +15,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="Thông tin nợ"
+        app:title="Chi tiết nợ"
         app:titleTextColor="@color/white" />
 
     <LinearLayout
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/action_buttons"
-        android:layout_below="@+id/general_loan_info"/>
+        android:layout_below="@+id/general_loan_info" />
 
     <LinearLayout
         android:id="@+id/action_buttons"
@@ -85,6 +85,6 @@
             android:layout_weight="1"
             android:background="@drawable/customized_button"
             android:text="Liên lạc"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary" />
     </LinearLayout>
 </RelativeLayout>
