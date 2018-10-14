@@ -43,7 +43,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private TextView tvInterest;
     private TextView tvNote;
     private DBManager dbManager;
-    private final int ID = ListActivity.Id;
+    private static int ID;
     Button btnAddDebt;
     Button btnPayDebt;
     private Button btnContactDebtor;
@@ -59,7 +59,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
+        if(ListActivity.Id != -1)
+            ID = ListActivity.Id;
         initialize();
 
         payLoanBottomSheet = new PayLoanBottomSheetDialogFragment();
@@ -114,9 +115,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 startActivity(goToAddNewLoan);
                 break;
             case R.id.homeAsUp:
+                ListActivity.Id = -1;
                 Intent goToList = new Intent(PersonalInfoActivity.this, ListActivity.class);
                 startActivity(goToList);
-                ListActivity.Id = -1;
                 break;
             case R.id.action_delete:
                 deleteDebtor(ID);
@@ -142,22 +143,22 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     public void payInterest() {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        final String date = simpleDateFormat.format(calendar.getTime());
         dbManager = new DBManager(this);
-        final Debtor debtor = dbManager.getDebtorById(ID);
         DecimalFormat formatter = new DecimalFormat("###,###,###");
-
         String interest = String.valueOf(formatter.format((int) dbManager.calculateInterest(dbManager.getDebtorById(ID))));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Trả lãi");
         builder.setMessage("Tiền lãi hiện tại: " + interest +
                 "\nBạn có chắc chắn muốn xóa tiền lãi cho khoản nợ này?");
+
         builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Debtor debtor = dbManager.getDebtorById(ID);
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String date = simpleDateFormat.format(calendar.getTime());
                 debtor.setmInterest_date(date);
                 if (dbManager.UpdateDebtor(debtor))
                     Toast.makeText(PersonalInfoActivity.this, "Xóa lãi thành công!", Toast.LENGTH_LONG).show();
@@ -179,9 +180,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
         dbManager = new DBManager(this);
         Debtor debtor = dbManager.getDebtorById(ID);
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String date = simpleDateFormat.format(calendar.getTime());
         DecimalFormat formatter = new DecimalFormat("###,###,###");
 
         String loanAmount, interest;
@@ -189,10 +187,18 @@ public class PersonalInfoActivity extends AppCompatActivity {
         interest = String.valueOf(formatter.format((int) dbManager.calculateInterest(dbManager.getDebtorById(ID))));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Trả nợ gốc + lãi");
-        builder.setMessage("Tiền nợ gốc: " + loanAmount +
-                "\nTiền lãi hiện tại: " + interest +
-                "\nBạn có chắc chắn muốn hoàn tất khoản nợ này?");
+        if(dbManager.calculateInterest(debtor) == 0)
+        {
+            builder.setTitle("Trả nợ");
+            builder.setMessage("Tiền nợ gốc: " + loanAmount +
+                    "\nBạn có chắc chắn muốn hoàn tất khoản nợ này?");
+        }
+        else {
+            builder.setTitle("Trả nợ gốc + lãi");
+            builder.setMessage("Tiền nợ gốc: " + loanAmount +
+                    "\nTiền lãi hiện tại: " + interest +
+                    "\nBạn có chắc chắn muốn hoàn tất khoản nợ này?");
+        }
         builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -310,5 +316,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+    private void callDebtor(int ID)
+    {
+
     }
 }

@@ -136,7 +136,7 @@ public class AddNewLoanActivity extends AppCompatActivity {
         Double interest_rate = Double.valueOf(edtInterest_rate.getText().toString());
         String date = edtDate.getText().toString();
         String description = edtDescription.getText().toString();
-        Debtor debtor = new Debtor(name, phone, address, debt, interest_rate, date, "", description);
+        Debtor debtor = new Debtor(name, phone, address, debt, interest_rate, date, date, description);
         return debtor;
     }
 

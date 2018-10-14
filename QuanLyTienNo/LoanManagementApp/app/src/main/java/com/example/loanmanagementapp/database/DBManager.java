@@ -261,7 +261,7 @@ public class DBManager extends SQLiteOpenHelper {
     {
         Calendar calendar = Calendar.getInstance();
         Date toDay = calendar.getTime();
-        String date = debtor.getmDate();
+        String date = debtor.getmInterest_date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date interest = new Date();
         try {
@@ -297,7 +297,7 @@ public class DBManager extends SQLiteOpenHelper {
 
                 Calendar calendar = Calendar.getInstance();
                 int today = calendar.get(Calendar.DATE);
-                if(debtor.getmDate().length() >5)
+                if(debtor.getmDate().length() >5 && debtor.getmInterest_rate() != 0)
                 {
                     Log.d("Check:", debtor.getmName() + debtor.getmDate().substring(0,2));
                     if(today == Integer.valueOf(debtor.getmDate().substring(0,2)))
