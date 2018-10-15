@@ -11,11 +11,11 @@ import com.example.loanmanagementapp.PersonalInfoActivity;
 import com.example.loanmanagementapp.R;
 
 public class PayLoanBottomSheetDialogFragment extends BottomSheetDialogFragment {
-    TextView payInterestOnly, payLoanAndInterest;
-    PersonalInfoActivity person;
+    private TextView payInterestOnly, payLoanAndInterest;
+    private PersonalInfoActivity debtor;
 
-    public void setPerson(PersonalInfoActivity p) {
-        this.person = p;
+    public void setDebtor(PersonalInfoActivity debtor) {
+        this.debtor = debtor;
     }
 
     public View onCreateView(LayoutInflater inflater,
@@ -30,7 +30,7 @@ public class PayLoanBottomSheetDialogFragment extends BottomSheetDialogFragment 
             @Override
             public void onClick(View v) {
                 dismiss();
-                person.payInterest();
+                debtor.payInterest();
             }
         });
 
@@ -39,7 +39,7 @@ public class PayLoanBottomSheetDialogFragment extends BottomSheetDialogFragment 
             @Override
             public void onClick(View v) {
                 dismiss();
-                person.payDebtAndInterest();
+                debtor.payDebtAndInterest();
             }
         });
         return v;

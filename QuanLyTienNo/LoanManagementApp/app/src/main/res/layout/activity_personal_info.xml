@@ -21,7 +21,7 @@
     <LinearLayout
         android:id="@+id/general_loan_info"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="118dp"
         android:layout_below="@+id/toolbar_PersonalInfo"
         android:gravity="center">
 
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nguyễn Văn A"
-                android:textSize="28sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/debtor_debt"
@@ -44,15 +44,18 @@
                 android:layout_height="wrap_content"
                 android:text="300,000"
                 android:textColor="@color/colorPrimary"
-                android:textSize="48sp" />
+                android:textSize="44sp" />
         </LinearLayout>
     </LinearLayout>
 
     <ListView
+        android:id="@+id/lv_debtor_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/action_buttons"
-        android:layout_below="@+id/general_loan_info" />
+        android:layout_above="@id/action_buttons"
+        android:layout_below="@id/general_loan_info"
+        android:divider="@color/lightGrey"
+        android:dividerHeight="0px" />
 
     <LinearLayout
         android:id="@+id/action_buttons"
@@ -68,7 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/customized_button"
-            android:text="Thêm nợ" />
+            android:text="Thêm nợ"
+            android:textColor="@color/colorPrimary" />
 
         <Button
             android:id="@+id/debtor_pay_debt_btn"
@@ -76,7 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/customized_button"
-            android:text="Trừ nợ" />
+            android:text="Trừ nợ"
+            android:textColor="@color/colorPrimary" />
 
         <Button
             android:id="@+id/contact_debtor_btn"

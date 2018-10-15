@@ -37,7 +37,7 @@
         android:drawablePadding="24dp"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:text="Trừ tiền gốc + lãi"
+        android:text="Trừ tiền gốc + lãi (hoàn tất nợ)"
         android:textColor="@color/black"
         android:textSize="16sp" />
 </LinearLayout>

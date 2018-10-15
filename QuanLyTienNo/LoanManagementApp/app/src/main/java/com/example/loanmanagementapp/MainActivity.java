@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     public void SetAdapter(){
         listDebtor = dbManager.notifyDebtor();
         if(customAdapter == null){
-            customAdapter = new CustomAdapter(this, R.layout.item_list_debtor, listDebtor);
+            customAdapter = new CustomAdapter(this, R.layout.list_debtor_item, listDebtor);
             lvNotify.setAdapter(customAdapter);
         }
         else{

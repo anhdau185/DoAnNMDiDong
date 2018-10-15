@@ -12,11 +12,11 @@ import com.example.loanmanagementapp.PersonalInfoActivity;
 import com.example.loanmanagementapp.R;
 
 public class ContactBottomSheetDialogFragment extends BottomSheetDialogFragment {
-    TextView makeACall, sendSmsMessage;
-    PersonalInfoActivity person;
+    private TextView makeACall, sendSmsMessage;
+    private PersonalInfoActivity debtor;
 
-    public void setPerson (PersonalInfoActivity p){
-        this.person = p;
+    public void setDebtor(PersonalInfoActivity debtor) {
+        this.debtor = debtor;
     }
 
     public View onCreateView(LayoutInflater inflater,
@@ -31,9 +31,7 @@ public class ContactBottomSheetDialogFragment extends BottomSheetDialogFragment 
             @Override
             public void onClick(View v) {
                 dismiss();
-                person.callDebtor();
-                // call the debtor here
-
+                debtor.callDebtor();
             }
         });
 
@@ -42,12 +40,9 @@ public class ContactBottomSheetDialogFragment extends BottomSheetDialogFragment 
             @Override
             public void onClick(View v) {
                 dismiss();
-                person.sendSMS();
-                // send an SMS message to the debtor here
-
+                debtor.sendSMS();
             }
         });
-
         return v;
     }
 }

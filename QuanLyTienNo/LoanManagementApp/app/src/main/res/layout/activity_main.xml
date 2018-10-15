@@ -108,13 +108,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
         android:text="Trả lãi hôm nay"
         android:textSize="14sp" />
 
     <ListView
         android:id="@+id/main_notify_lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@color/lightGrey"
+        android:dividerHeight="1px" />
 </LinearLayout>

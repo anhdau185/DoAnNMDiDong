@@ -3,6 +3,7 @@ package com.example.loanmanagementapp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -22,11 +23,17 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.loanmanagementapp.adapter.CustomAdapter;
+import com.example.loanmanagementapp.adapter.DebtorDetailAdapter;
 import com.example.loanmanagementapp.database.DBManager;
 import com.example.loanmanagementapp.model.Debtor;
+import com.example.loanmanagementapp.model.DebtorDetail;
 import com.example.loanmanagementapp.model.SortBottomSheetDialogFragment;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class ListActivity extends AppCompatActivity {
     private List<Debtor> listDebtor;
@@ -178,7 +185,7 @@ public class ListActivity extends AppCompatActivity {
 
     public void SetAdapter() {
         if (customAdapter == null) {
-            customAdapter = new CustomAdapter(this, R.layout.item_list_debtor, listDebtor);
+            customAdapter = new CustomAdapter(this, R.layout.list_debtor_item, listDebtor);
             lvDebtor.setAdapter(customAdapter);
         } else {
             lvDebtor.setSelection(customAdapter.getCount() - 1);

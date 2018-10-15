@@ -19,6 +19,7 @@ public class CustomAdapter extends ArrayAdapter<Debtor> {
     private Context context;
     private int resource;
     private List<Debtor> listDebtor;
+
     public CustomAdapter(@NonNull Context context, int resource, @NonNull List<Debtor> objects) {
         super(context, resource, objects);
         this.context = context;
@@ -30,13 +31,13 @@ public class CustomAdapter extends ArrayAdapter<Debtor> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
-        if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_list_debtor, parent,false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_debtor_item, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.tvName = (TextView)convertView.findViewById(R.id.tv_Name);
-            viewHolder.tvDebt = (TextView)convertView.findViewById(R.id.tv_Debt);
+            viewHolder.tvName = (TextView) convertView.findViewById(R.id.tv_Name);
+            viewHolder.tvDebt = (TextView) convertView.findViewById(R.id.tv_Debt);
             convertView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Debtor debtor = listDebtor.get(position);
@@ -46,7 +47,7 @@ public class CustomAdapter extends ArrayAdapter<Debtor> {
         return convertView;
     }
 
-    public class ViewHolder{
+    public class ViewHolder {
         private TextView tvName;
         private TextView tvDebt;
     }

@@ -18,12 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.loanmanagementapp.adapter.DebtorDetailAdapter;
 import com.example.loanmanagementapp.database.DBManager;
 import com.example.loanmanagementapp.model.ContactBottomSheetDialogFragment;
 import com.example.loanmanagementapp.model.Debtor;
+import com.example.loanmanagementapp.model.DebtorDetail;
 import com.example.loanmanagementapp.model.PayLoanBottomSheetDialogFragment;
 import com.example.loanmanagementapp.model.SortBottomSheetDialogFragment;
 
@@ -31,10 +34,17 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class PersonalInfoActivity extends AppCompatActivity {
+    private DBManager dbManager;
+    private List<DebtorDetail> details;
+    private DebtorDetailAdapter debtorDetailAdapter;
+    private ListView lvDebtorDetails;
+
     private TextView tvName;
     private TextView tvDebt;
     private TextView tvPhone;
@@ -43,10 +53,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private TextView tvDate;
     private TextView tvInterest;
     private TextView tvNote;
-    private DBManager dbManager;
     private static int ID;
-    Button btnAddDebt;
-    Button btnPayDebt;
+    private Button btnAddDebt;
+    private Button btnPayDebt;
     private Button btnContactDebtor;
 
     private PayLoanBottomSheetDialogFragment payLoanBottomSheet;
@@ -60,14 +69,14 @@ public class PersonalInfoActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        if(ListActivity.Id != -1)
+        if (ListActivity.Id != -1)
             ID = ListActivity.Id;
         initialize();
 
         payLoanBottomSheet = new PayLoanBottomSheetDialogFragment();
-        payLoanBottomSheet.setPerson(this);
+        payLoanBottomSheet.setDebtor(this);
         contactDebtorBottomSheet = new ContactBottomSheetDialogFragment();
-        contactDebtorBottomSheet.setPerson(this);
+        contactDebtorBottomSheet.setDebtor(this);
 
         btnAddDebt = (Button) findViewById(R.id.debtor_add_debt_btn);
         // Su kien nut 'Them no'
@@ -117,7 +126,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 break;
             case R.id.homeAsUp:
                 ListActivity.Id = -1;
-                Log.d("Reset ID:", ListActivity.Id +"");
+                Log.d("Reset ID:", ListActivity.Id + "");
                 Intent goToList = new Intent(PersonalInfoActivity.this, ListActivity.class);
                 startActivity(goToList);
                 break;
@@ -130,11 +139,24 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private void initialize() {
         dbManager = new DBManager(this);
         Debtor debtor = dbManager.getDebtorById(ID);
+        details = new ArrayList<>();
+        lvDebtorDetails = (ListView) findViewById(R.id.lv_debtor_detail);
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+
+        details.add(new DebtorDetail("Điện thoại", (debtor.getmPhone())));
+        details.add(new DebtorDetail("Địa chỉ", debtor.getmAddress()));
+        details.add(new DebtorDetail("Lãi suất (%/năm)", String.valueOf(debtor.getmInterest_rate())));
+        details.add(new DebtorDetail("Tiền lãi hiện tại", String.valueOf(formatter.format((int) dbManager.calculateInterest(debtor)))));
+        details.add(new DebtorDetail("Ngày vay", String.valueOf(debtor.getmInterest_date())));
+        details.add(new DebtorDetail("Mô tả", debtor.getmDescription()));
+        debtorDetailAdapter = new DebtorDetailAdapter(this, R.layout.personal_info_debtor_detail_item, details);
+
         tvName = (TextView) findViewById(R.id.debtor_name);
         tvDebt = (TextView) findViewById(R.id.debtor_debt);
-        DecimalFormat formatter = new DecimalFormat("###,###,###");
         tvName.setText(debtor.getmName());
         tvDebt.setText(String.valueOf(formatter.format(debtor.getmDebt())));
+
+        lvDebtorDetails.setAdapter(debtorDetailAdapter);
 
 //        tvAddress.setText(debtor.getmAddress());
 //        tvPhone.setText(debtor.getmPhone());
@@ -146,11 +168,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public void payInterest() {
         dbManager = new DBManager(this);
+        Debtor debtor = dbManager.getDebtorById(ID);
+
         DecimalFormat formatter = new DecimalFormat("###,###,###");
-        String interest = String.valueOf(formatter.format((int) dbManager.calculateInterest(dbManager.getDebtorById(ID))));
+        String interest = String.valueOf(formatter.format((int) dbManager.calculateInterest(debtor)));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        if(dbManager.calculateInterest(dbManager.getDebtorById(ID)) == 0){
+        if (dbManager.calculateInterest(debtor) == 0) {
             builder.setTitle("Trả lãi");
             builder.setMessage("Tiền lãi đã được thanh toán!");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -159,8 +183,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     dialog.cancel();
                 }
             });
-        }
-        else {
+        } else {
             builder.setTitle("Trả lãi");
             builder.setMessage("Tiền lãi hiện tại: " + interest +
                     "\nBạn có chắc chắn muốn xóa tiền lãi cho khoản nợ này?");
@@ -195,19 +218,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
         Debtor debtor = dbManager.getDebtorById(ID);
 
         DecimalFormat formatter = new DecimalFormat("###,###,###");
-
         String loanAmount, interest;
         loanAmount = String.valueOf(formatter.format(debtor.getmDebt()));
-        interest = String.valueOf(formatter.format((int) dbManager.calculateInterest(dbManager.getDebtorById(ID))));
+        interest = String.valueOf(formatter.format((int) dbManager.calculateInterest(debtor)));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        if(dbManager.calculateInterest(debtor) == 0)
-        {
+        if (dbManager.calculateInterest(debtor) == 0) {
             builder.setTitle("Trả nợ");
             builder.setMessage("Tiền nợ gốc: " + loanAmount +
                     "\nBạn có chắc chắn muốn hoàn tất khoản nợ này?");
-        }
-        else {
+        } else {
             builder.setTitle("Trả nợ gốc + lãi");
             builder.setMessage("Tiền nợ gốc: " + loanAmount +
                     "\nTiền lãi hiện tại: " + interest +
@@ -248,7 +268,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             Toast.makeText(PersonalInfoActivity.this, "Không thể thêm nợ khi tiền lãi chưa được thanh toán", Toast.LENGTH_LONG).show();
         } else {
             LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
-            View mView = layoutInflaterAndroid.inflate(R.layout.personal_input_dialog, null);
+            View mView = layoutInflaterAndroid.inflate(R.layout.personal_info_input_dialog, null);
             AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(this);
             alertDialogBuilderUserInput.setView(mView);
 
@@ -331,13 +351,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    public void callDebtor()
-    {
+
+    public void callDebtor() {
         Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + dbManager.getDebtorById(ID).getmPhone()));
         startActivity(callIntent);
     }
-    public void sendSMS()
-    {
+
+    public void sendSMS() {
         Intent sendSMS = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + dbManager.getDebtorById(ID).getmPhone()));
         startActivity(sendSMS);
     }
