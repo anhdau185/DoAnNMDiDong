@@ -1,8 +1,10 @@
 package com.example.loanmanagementapp;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -20,6 +22,7 @@ import com.example.loanmanagementapp.database.DBManager;
 import com.example.loanmanagementapp.model.Debtor;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -74,16 +77,21 @@ public class AddNewLoanActivity extends AppCompatActivity {
                     if (debtor != null) {
                         dbManager.addDebtor(debtor);
                         Toast.makeText(AddNewLoanActivity.this, "Thêm thành công!", Toast.LENGTH_LONG).show();
+                        Intent goToList = new Intent(AddNewLoanActivity.this, ListActivity.class);
+                        startActivity(goToList);
                     }
-                } else {
+                }
+                else {
                     if (debtor != null) {
 //                        Log.d("update:", "ready");
                         if (dbManager.UpdateDebtor(debtor))
+                        {
                             Toast.makeText(AddNewLoanActivity.this, "Chỉnh sửa thành công!", Toast.LENGTH_LONG).show();
+                            Intent goPersonal = new Intent(AddNewLoanActivity.this, PersonalInfoActivity.class);
+                            startActivity(goPersonal);
+                        }
                     }
                 }
-                Intent goToList = new Intent(AddNewLoanActivity.this, ListActivity.class);
-                startActivity(goToList);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -127,17 +135,21 @@ public class AddNewLoanActivity extends AppCompatActivity {
         edtDescription = findViewById(R.id.add_loan_description);
     }
 
-    private Debtor createDebtor() {
-        String name = edtName.getText().toString();
-        String phone = edtPhone.getText().toString();
-        String address = edtAddress.getText().toString();
-        String strDebt = (edtDebt.getText().toString()).replaceAll("[,.]", "");
-        Integer debt = Integer.valueOf(strDebt);
-        Double interest_rate = Double.valueOf(edtInterest_rate.getText().toString());
-        String date = edtDate.getText().toString();
-        String description = edtDescription.getText().toString();
-        Debtor debtor = new Debtor(name, phone, address, debt, interest_rate, date, date, description);
-        return debtor;
+    private Debtor createDebtor()
+    {
+        if(checkValue()) {
+            String name = edtName.getText().toString();
+            String phone = edtPhone.getText().toString();
+            String address = edtAddress.getText().toString();
+            String strDebt = (edtDebt.getText().toString()).replaceAll("[,.]", "");
+            Integer debt = Integer.valueOf(strDebt);
+            Double interest_rate = Double.valueOf(edtInterest_rate.getText().toString());
+            String date = edtDate.getText().toString();
+            String description = edtDescription.getText().toString();
+            Debtor debtor = new Debtor(name, phone, address, debt, interest_rate, date, date, description);
+            return debtor;
+        }
+        return null;
     }
 
     private void initializeEditDebtor(int id) {
@@ -171,5 +183,52 @@ public class AddNewLoanActivity extends AppCompatActivity {
             }
         }, mYear, mMonth, mDay);
         datePickerDialog.show();
+    }
+    private boolean checkValue()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Lỗi");
+        if(edtName.getText().toString().isEmpty())
+        {
+            builder.setMessage("Vui lòng nhập tên!");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            return false;
+        }
+        if(edtDebt.getText().toString().isEmpty())
+        {
+            builder.setMessage("Vui lòng nhập số tiền nợ!");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            return false;
+        }
+        if(edtDate.getText().toString().isEmpty())
+        {
+            builder.setMessage("Vui lòng chọn ngày vay!");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            return false;
+        }
+        if(edtInterest_rate.toString().isEmpty())
+            edtInterest_rate.setText("0");
+        return true;
     }
 }

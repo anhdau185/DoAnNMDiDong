@@ -31,6 +31,7 @@ public class ContactBottomSheetDialogFragment extends BottomSheetDialogFragment 
             @Override
             public void onClick(View v) {
                 dismiss();
+                person.callDebtor();
                 // call the debtor here
 
             }
@@ -41,6 +42,7 @@ public class ContactBottomSheetDialogFragment extends BottomSheetDialogFragment 
             @Override
             public void onClick(View v) {
                 dismiss();
+                person.sendSMS();
                 // send an SMS message to the debtor here
 
             }

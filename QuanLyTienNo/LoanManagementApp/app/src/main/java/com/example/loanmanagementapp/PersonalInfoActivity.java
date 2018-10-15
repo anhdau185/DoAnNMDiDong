@@ -2,6 +2,7 @@ package com.example.loanmanagementapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -73,7 +74,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         btnAddDebt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addDebt(ID);
+                addDebt();
             }
         });
 
@@ -116,11 +117,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 break;
             case R.id.homeAsUp:
                 ListActivity.Id = -1;
+                Log.d("Reset ID:", ListActivity.Id +"");
                 Intent goToList = new Intent(PersonalInfoActivity.this, ListActivity.class);
                 startActivity(goToList);
                 break;
             case R.id.action_delete:
-                deleteDebtor(ID);
+                deleteDebtor();
         }
         return super.onContextItemSelected(item);
     }
@@ -148,30 +150,42 @@ public class PersonalInfoActivity extends AppCompatActivity {
         String interest = String.valueOf(formatter.format((int) dbManager.calculateInterest(dbManager.getDebtorById(ID))));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Trả lãi");
-        builder.setMessage("Tiền lãi hiện tại: " + interest +
-                "\nBạn có chắc chắn muốn xóa tiền lãi cho khoản nợ này?");
+        if(dbManager.calculateInterest(dbManager.getDebtorById(ID)) == 0){
+            builder.setTitle("Trả lãi");
+            builder.setMessage("Tiền lãi đã được thanh toán!");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }
+        else {
+            builder.setTitle("Trả lãi");
+            builder.setMessage("Tiền lãi hiện tại: " + interest +
+                    "\nBạn có chắc chắn muốn xóa tiền lãi cho khoản nợ này?");
 
-        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Debtor debtor = dbManager.getDebtorById(ID);
-                Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String date = simpleDateFormat.format(calendar.getTime());
-                debtor.setmInterest_date(date);
-                if (dbManager.UpdateDebtor(debtor))
-                    Toast.makeText(PersonalInfoActivity.this, "Xóa lãi thành công!", Toast.LENGTH_LONG).show();
-                initialize();
-                dbManager.close();
-            }
-        });
-        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Debtor debtor = dbManager.getDebtorById(ID);
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    String date = simpleDateFormat.format(calendar.getTime());
+                    debtor.setmInterest_date(date);
+                    if (dbManager.UpdateDebtor(debtor))
+                        Toast.makeText(PersonalInfoActivity.this, "Xóa lãi thành công!", Toast.LENGTH_LONG).show();
+                    initialize();
+                    dbManager.close();
+                }
+            });
+            builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
@@ -223,9 +237,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void addDebt(int id) {
+    private void addDebt() {
         dbManager = new DBManager(this);
-        final Debtor debtor = dbManager.getDebtorById(id);
+        final Debtor debtor = dbManager.getDebtorById(ID);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         final String date = simpleDateFormat.format(calendar.getTime());
@@ -291,7 +305,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         }
     }
 
-    private void deleteDebtor(final int ID) {
+    private void deleteDebtor() {
         dbManager = new DBManager(this);
         Debtor debtor = dbManager.getDebtorById(ID);
 
@@ -317,8 +331,14 @@ public class PersonalInfoActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    private void callDebtor(int ID)
+    public void callDebtor()
     {
-
+        Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + dbManager.getDebtorById(ID).getmPhone()));
+        startActivity(callIntent);
+    }
+    public void sendSMS()
+    {
+        Intent sendSMS = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + dbManager.getDebtorById(ID).getmPhone()));
+        startActivity(sendSMS);
     }
 }
