@@ -36,7 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nguyễn Văn A"
-                android:textSize="24sp" />
+                android:textAllCaps="true"
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/debtor_debt"
