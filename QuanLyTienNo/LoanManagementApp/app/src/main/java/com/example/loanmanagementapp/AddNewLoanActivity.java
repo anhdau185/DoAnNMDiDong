@@ -204,7 +204,7 @@ public class AddNewLoanActivity extends AppCompatActivity {
                 if (cursor != null && cursor.moveToNext()) {
                     String phoneNumber = cursor.getString(0);
                     // do something with the phone number
-                    edtPhone.setText(phoneNumber);
+                    edtPhone.setText(phoneNumber.replaceAll("-", ""));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

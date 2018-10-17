@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="28dp"
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="3dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_toStartOf="@+id/add_pick_contact">
 
                     <EditText
@@ -67,7 +67,7 @@
 
                 <Button
                     android:id="@+id/add_pick_contact"
-                    android:layout_width="110dp"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
@@ -128,15 +128,17 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="3dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_toStartOf="@+id/add_select_date">
 
                     <EditText
                         android:id="@+id/add_loan_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
                         android:focusable="false"
                         android:hint="Ngày vay"
+                        android:longClickable="false"
                         android:textSize="16sp" />
                 </android.support.design.widget.TextInputLayout>
 
