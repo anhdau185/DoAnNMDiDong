@@ -19,7 +19,6 @@
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:backgroundTint="@android:color/white"
-        android:drawableStart="@drawable/alphabetical_sorting_asc_24"
         android:drawablePadding="24dp"
         android:gravity="center_vertical"
         android:text="Tên tăng dần"
@@ -32,7 +31,6 @@
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:backgroundTint="@android:color/white"
-        android:drawableStart="@drawable/alphabetical_sorting_desc_24"
         android:drawablePadding="24dp"
         android:gravity="center_vertical"
         android:text="Tên giảm dần"
@@ -45,10 +43,9 @@
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:backgroundTint="@android:color/white"
-        android:drawableStart="@drawable/numerical_sorting_asc_24"
         android:drawablePadding="24dp"
         android:gravity="center_vertical"
-        android:text="Nợ tăng dần"
+        android:text="Số tiền tăng dần"
         android:textColor="@color/black"
         android:textSize="16sp" />
 
@@ -58,10 +55,14 @@
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:backgroundTint="@android:color/white"
-        android:drawableStart="@drawable/numerical_sorting_desc_24"
         android:drawablePadding="24dp"
         android:gravity="center_vertical"
-        android:text="Nợ giảm dần"
+        android:text="Số tiền giảm dần"
         android:textColor="@color/black"
         android:textSize="16sp" />
+
+    <android.support.v4.widget.Space
+        android:layout_marginStart="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="8dp" />
 </LinearLayout>

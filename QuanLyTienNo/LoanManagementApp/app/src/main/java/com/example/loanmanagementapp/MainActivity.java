@@ -1,26 +1,28 @@
 package com.example.loanmanagementapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.loanmanagementapp.adapter.CustomAdapter;
 import com.example.loanmanagementapp.database.DBManager;
+import com.example.loanmanagementapp.model.ActivityName;
 import com.example.loanmanagementapp.model.Debtor;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private int selectedId;
+
     private TextView tvSumDebt;
     private DBManager dbManager;
     ListView lvNotify;
@@ -40,8 +42,9 @@ public class MainActivity extends AppCompatActivity {
         btnAddLoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToAddLoan = new Intent(MainActivity.this, AddNewLoanActivity.class);
-                startActivity(goToAddLoan);
+                Intent goToAddNewLoan = new Intent(MainActivity.this, AddNewLoanActivity.class);
+                goToAddNewLoan.putExtra("sourceActivity", ActivityName.MAIN);
+                startActivity(goToAddNewLoan);
             }
         });
 
@@ -60,23 +63,25 @@ public class MainActivity extends AppCompatActivity {
         lvNotify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ListActivity.Id = listDebtor.get(position).getmID();
+                selectedId = listDebtor.get(position).getmID();
 //                    Log.d("searching ID:",String.valueOf(Id));
                 Intent goToPersonalInfo = new Intent(MainActivity.this, PersonalInfoActivity.class);
+                goToPersonalInfo.putExtra("debtorId", selectedId);
                 startActivity(goToPersonalInfo);
             }
         });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mMenuInflater = getMenuInflater();
-        mMenuInflater.inflate(R.menu.app_menu, menu);
+        mMenuInflater.inflate(R.menu.main_activity_menu, menu);
         return true;
     }
 
-    private void Initialize(){
+//    public b
+
+    private void Initialize() {
         dbManager = new DBManager(this);
         tvSumDebt = (TextView) findViewById(R.id.main_sum_debt);
         lvNotify = (ListView) findViewById(R.id.main_notify_lv);
@@ -84,14 +89,13 @@ public class MainActivity extends AppCompatActivity {
         tvSumDebt.setText(String.valueOf(formatter.format(dbManager.sumOfDebt())));
     }
 
-    public void SetAdapter(){
+    public void SetAdapter() {
         listDebtor = dbManager.notifyDebtor();
-        if(customAdapter == null){
+        if (customAdapter == null) {
             customAdapter = new CustomAdapter(this, R.layout.list_debtor_item, listDebtor);
             lvNotify.setAdapter(customAdapter);
-        }
-        else{
-            lvNotify.setSelection(customAdapter.getCount()-1);
+        } else {
+            lvNotify.setSelection(customAdapter.getCount() - 1);
         }
     }
 }

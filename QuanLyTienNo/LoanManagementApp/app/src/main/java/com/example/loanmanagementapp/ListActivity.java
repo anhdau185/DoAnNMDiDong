@@ -1,7 +1,10 @@
 package com.example.loanmanagementapp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +28,7 @@ import android.widget.Toast;
 import com.example.loanmanagementapp.adapter.CustomAdapter;
 import com.example.loanmanagementapp.adapter.DebtorDetailAdapter;
 import com.example.loanmanagementapp.database.DBManager;
+import com.example.loanmanagementapp.model.ActivityName;
 import com.example.loanmanagementapp.model.Debtor;
 import com.example.loanmanagementapp.model.DebtorDetail;
 import com.example.loanmanagementapp.model.SortBottomSheetDialogFragment;
@@ -36,12 +40,14 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class ListActivity extends AppCompatActivity {
+    private int selectedId;
+    private BroadcastReceiver receiver;
+
     private List<Debtor> listDebtor;
     private DBManager dbManager;
     private CustomAdapter customAdapter;
     private ListView lvDebtor;
     private SearchView searchView;
-    public static int Id = -1;
     private FloatingActionButton mfbtn;
     private int[] listID;
     private boolean isSearching = false;
@@ -58,6 +64,17 @@ public class ListActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (action != null && action.equals("finish_activity")) {
+                    finish();
+                }
+            }
+        };
+        registerReceiver(receiver, new IntentFilter("finish_activity"));
+
         Initialize();
         SetAdapter();
 
@@ -68,7 +85,9 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent goToAddNewLoan = new Intent(ListActivity.this, AddNewLoanActivity.class);
+                goToAddNewLoan.putExtra("sourceActivity", ActivityName.LOAN_LIST);
                 startActivity(goToAddNewLoan);
+                finish();
             }
         });
 
@@ -77,13 +96,14 @@ public class ListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (!isSearching) {
                     Debtor debtor = listDebtor.get(position);
-                    Id = debtor.getmID();
+                    selectedId = debtor.getmID();
 //                    Log.d("Not searching ID:",String.valueOf(Id));
                 } else {
-                    Id = listID[position];
+                    selectedId = listID[position];
 //                    Log.d("searching ID:",String.valueOf(Id));
                 }
                 Intent goToPersonalInfo = new Intent(ListActivity.this, PersonalInfoActivity.class);
+                goToPersonalInfo.putExtra("debtorId", selectedId);
                 startActivity(goToPersonalInfo);
             }
         });
@@ -91,7 +111,7 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Debtor debtor = listDebtor.get(position);
-                Id = debtor.getmID();
+                selectedId = debtor.getmID();
                 return false;
             }
         });
@@ -163,21 +183,18 @@ public class ListActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit_info:
-                Intent goToAddNewLoan = new Intent(ListActivity.this, AddNewLoanActivity.class);
-                startActivity(goToAddNewLoan);
+                Intent goToEditLoan = new Intent(ListActivity.this, AddNewLoanActivity.class);
+                goToEditLoan.putExtra("sourceActivity", ActivityName.LOAN_LIST);
+                goToEditLoan.putExtra("debtorId", selectedId);
+                startActivity(goToEditLoan);
 //                Log.d("Update:", "position " + Id);
                 break;
             case R.id.action_delete:
 //                Log.d("Delete: ", Id+"");
-                deleteDebtor(Id);
+                deleteDebtor(selectedId);
                 listDebtor.clear();
                 listDebtor.addAll(dbManager.getAllDebtorNameASC());
                 customAdapter.notifyDataSetChanged();
-
-                break;
-            case R.id.action_call:
-                break;
-            case R.id.action_sms:
                 break;
         }
         return super.onContextItemSelected(item);
@@ -238,9 +255,15 @@ public class ListActivity extends AppCompatActivity {
         builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (dbManager.deleteDebtor(ID))
+                if (dbManager.deleteDebtor(ID)) {
                     Toast.makeText(ListActivity.this, "Xóa thành công!", Toast.LENGTH_LONG).show();
-                dbManager.close();
+                    dbManager.close();
+                } else {
+                    Toast.makeText(ListActivity.this, "Xảy ra lỗi khi xóa", Toast.LENGTH_LONG).show();
+                }
+                Intent reloadLoanList = new Intent(ListActivity.this, ListActivity.class);
+                startActivity(reloadLoanList);
+                finish();
             }
         });
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -251,5 +274,12 @@ public class ListActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (receiver != null)
+            unregisterReceiver(receiver);
+        super.onDestroy();
     }
 }

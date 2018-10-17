@@ -13,7 +13,7 @@
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="@string/add_new_loan"
+        app:title="..."
         app:titleTextColor="#FFFFFF" />
 
     <ScrollView
@@ -24,8 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
             android:orientation="vertical">
 
@@ -43,19 +43,38 @@
                     android:textSize="16sp" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:paddingTop="8dp">
 
-                <EditText
-                    android:id="@+id/add_loan_phone"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Điện thoại"
-                    android:inputType="phone"
-                    android:textSize="16sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="3dp"
+                    android:layout_toStartOf="@+id/add_pick_contact">
+
+                    <EditText
+                        android:id="@+id/add_loan_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Điện thoại"
+                        android:inputType="phone"
+                        android:textSize="16sp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/add_pick_contact"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_action_calendar"
+                    android:text="Danh bạ" />
+
+            </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -99,23 +118,43 @@
                     android:textSize="16sp" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:paddingTop="8dp">
 
-                <EditText
-                    android:id="@+id/add_loan_date"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ngày vay"
-                    android:textSize="16sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="3dp"
+                    android:layout_toStartOf="@+id/add_select_date">
+
+                    <EditText
+                        android:id="@+id/add_loan_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint="Ngày vay"
+                        android:textSize="16sp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/add_select_date"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_action_calendar"
+                    android:text="Chọn ngày" />
+            </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="20dp">
 
                 <EditText
                     android:id="@+id/add_loan_description"
@@ -127,5 +166,4 @@
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </ScrollView>
-    <!--</LinearLayout>-->
 </LinearLayout>

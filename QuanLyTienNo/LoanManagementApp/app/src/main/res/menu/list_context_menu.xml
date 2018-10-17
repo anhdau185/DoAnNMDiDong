@@ -3,19 +3,8 @@
 
     <item
         android:id="@+id/action_edit_info"
-        android:title="Chỉnh sửa"
-        />
+        android:title="Chỉnh sửa" />
     <item
         android:id="@+id/action_delete"
-        android:title="Xóa"
-        />
-    <item
-        android:id="@+id/action_call"
-        android:title="Gọi"
-        />
-    <item
-        android:id="@+id/action_sms"
-        android:title="Nhắn tin"
-        />
-
+        android:title="Xóa" />
 </menu>

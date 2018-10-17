@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Loan Management</string>
     <string name="menu_settings">Settings</string>
-    <string name="menu_about_us">About us</string>
+    <string name="menu_about_us">Thông tin tác giả</string>
     <string name="add_new_loan">Thêm nợ mới</string>
     <string name="loan_list">Danh sách nợ</string>
     <string name="upcoming_payers">Ai sắp trả nợ?</string>
     <string name="total_loan_amount">2,812,000</string>
     <string name="sort">Sắp xếp</string>
+    <string name="edit_loan">Chỉnh sửa nợ</string>
 </resources>

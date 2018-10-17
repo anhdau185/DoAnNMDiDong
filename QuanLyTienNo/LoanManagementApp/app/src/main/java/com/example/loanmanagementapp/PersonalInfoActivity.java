@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.loanmanagementapp.adapter.DebtorDetailAdapter;
 import com.example.loanmanagementapp.database.DBManager;
+import com.example.loanmanagementapp.model.ActivityName;
 import com.example.loanmanagementapp.model.ContactBottomSheetDialogFragment;
 import com.example.loanmanagementapp.model.Debtor;
 import com.example.loanmanagementapp.model.DebtorDetail;
@@ -40,11 +41,12 @@ import java.util.Date;
 import java.util.List;
 
 public class PersonalInfoActivity extends AppCompatActivity {
+    private int debtorId;
+
     private DBManager dbManager;
     private List<DebtorDetail> details;
     private DebtorDetailAdapter debtorDetailAdapter;
     private ListView lvDebtorDetails;
-
     private TextView tvName;
     private TextView tvDebt;
     private TextView tvPhone;
@@ -53,7 +55,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private TextView tvDate;
     private TextView tvInterest;
     private TextView tvNote;
-    private static int ID;
     private Button btnAddDebt;
     private Button btnPayDebt;
     private Button btnContactDebtor;
@@ -69,8 +70,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        if (ListActivity.Id != -1)
-            ID = ListActivity.Id;
+
+        debtorId = getIntent().getIntExtra("debtorId", -1);
+
         initialize();
 
         payLoanBottomSheet = new PayLoanBottomSheetDialogFragment();
@@ -92,7 +94,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         btnPayDebt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dbManager.getDebtorById(ID).getmInterest_rate() == 0) {
+                if (dbManager.getDebtorById(debtorId).getmInterest_rate() == 0) {
                     payDebtAndInterest();
                 } else {
                     payLoanBottomSheet.show(getSupportFragmentManager(), "pay_loan_action");
@@ -121,12 +123,14 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                Intent goToAddNewLoan = new Intent(PersonalInfoActivity.this, AddNewLoanActivity.class);
-                startActivity(goToAddNewLoan);
+                Intent goToEditLoan = new Intent(PersonalInfoActivity.this, AddNewLoanActivity.class);
+                goToEditLoan.putExtra("sourceActivity", ActivityName.PERSONAL_INFO);
+                goToEditLoan.putExtra("debtorId", debtorId);
+                startActivity(goToEditLoan);
+                finish();
                 break;
             case R.id.homeAsUp:
-                ListActivity.Id = -1;
-                Log.d("Reset ID:", ListActivity.Id + "");
+//                Log.d("Reset ID:", ListActivity.Id + "");
                 Intent goToList = new Intent(PersonalInfoActivity.this, ListActivity.class);
                 startActivity(goToList);
                 break;
@@ -138,7 +142,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     private void initialize() {
         dbManager = new DBManager(this);
-        Debtor debtor = dbManager.getDebtorById(ID);
+        Debtor debtor = dbManager.getDebtorById(debtorId);
         details = new ArrayList<>();
         lvDebtorDetails = (ListView) findViewById(R.id.lv_debtor_detail);
         DecimalFormat formatter = new DecimalFormat("###,###,###");
@@ -168,7 +172,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public void payInterest() {
         dbManager = new DBManager(this);
-        Debtor debtor = dbManager.getDebtorById(ID);
+        Debtor debtor = dbManager.getDebtorById(debtorId);
 
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         String interest = String.valueOf(formatter.format((int) dbManager.calculateInterest(debtor)));
@@ -191,7 +195,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Debtor debtor = dbManager.getDebtorById(ID);
+                    Debtor debtor = dbManager.getDebtorById(debtorId);
                     Calendar calendar = Calendar.getInstance();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                     String date = simpleDateFormat.format(calendar.getTime());
@@ -215,7 +219,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public void payDebtAndInterest() {
         dbManager = new DBManager(this);
-        Debtor debtor = dbManager.getDebtorById(ID);
+        Debtor debtor = dbManager.getDebtorById(debtorId);
 
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         String loanAmount, interest;
@@ -236,7 +240,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Debtor debtor = dbManager.getDebtorById(ID);
+                Debtor debtor = dbManager.getDebtorById(debtorId);
                 debtor.setmInterest_date("");
                 debtor.setmDate("");
                 debtor.setmInterest_rate(0);
@@ -259,12 +263,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     private void addDebt() {
         dbManager = new DBManager(this);
-        final Debtor debtor = dbManager.getDebtorById(ID);
+        final Debtor debtor = dbManager.getDebtorById(debtorId);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         final String date = simpleDateFormat.format(calendar.getTime());
 
-        if (dbManager.calculateInterest(dbManager.getDebtorById(ID)) > 0) {
+        if (dbManager.calculateInterest(dbManager.getDebtorById(debtorId)) > 0) {
             Toast.makeText(PersonalInfoActivity.this, "Không thể thêm nợ khi tiền lãi chưa được thanh toán", Toast.LENGTH_LONG).show();
         } else {
             LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
@@ -327,7 +331,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     private void deleteDebtor() {
         dbManager = new DBManager(this);
-        Debtor debtor = dbManager.getDebtorById(ID);
+        Debtor debtor = dbManager.getDebtorById(debtorId);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Xóa thông tin");
@@ -335,11 +339,21 @@ public class PersonalInfoActivity extends AppCompatActivity {
         builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (dbManager.deleteDebtor(ID))
+                if (dbManager.deleteDebtor(debtorId))
                     Toast.makeText(PersonalInfoActivity.this, "Xóa thành công!", Toast.LENGTH_LONG).show();
+                else {
+                    Toast.makeText(PersonalInfoActivity.this, "Xảy ra lỗi khi xóa", Toast.LENGTH_LONG).show();
+                }
                 dbManager.close();
-                Intent goToList = new Intent(PersonalInfoActivity.this, ListActivity.class);
+                Intent finishOldLoanList, goToList;
+
+                finishOldLoanList = new Intent("finish_activity");
+                sendBroadcast(finishOldLoanList);
+
+                goToList = new Intent(PersonalInfoActivity.this, ListActivity.class);
                 startActivity(goToList);
+
+                finish();
             }
         });
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -353,12 +367,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     public void callDebtor() {
-        Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + dbManager.getDebtorById(ID).getmPhone()));
+        Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + dbManager.getDebtorById(debtorId).getmPhone()));
         startActivity(callIntent);
     }
 
     public void sendSMS() {
-        Intent sendSMS = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + dbManager.getDebtorById(ID).getmPhone()));
+        Intent sendSMS = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + dbManager.getDebtorById(debtorId).getmPhone()));
         startActivity(sendSMS);
     }
 }

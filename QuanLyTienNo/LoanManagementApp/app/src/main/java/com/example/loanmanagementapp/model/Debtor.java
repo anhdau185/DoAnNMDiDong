@@ -112,8 +112,4 @@ public class Debtor {
         this.mInterest_date = mInterest_date;
         this.mDescription = mDescription;
     }
-
-
-
-
 }
