@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.example.loanmanagementapp.ListActivity;
 import com.example.loanmanagementapp.R;
 
+import java.util.Objects;
+
 public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
     private TextView ascAlphabeticalSort, descAlphabeticalSort, ascSortByLoanAmount, descSortByLoanAmount;
 
@@ -29,6 +31,7 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
                 dismiss();
                 sortStyle = 1;
                 startActivity(new Intent(getActivity(), ListActivity.class));
+                Objects.requireNonNull(getActivity()).finish(); // use this instead of getActivity().finish();
             }
         });
 
@@ -39,6 +42,7 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
                 dismiss();
                 sortStyle = 2;
                 startActivity(new Intent(getActivity(), ListActivity.class));
+                Objects.requireNonNull(getActivity()).finish();
             }
         });
 
@@ -49,6 +53,7 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
                 dismiss();
                 sortStyle = 3;
                 startActivity(new Intent(getActivity(), ListActivity.class));
+                Objects.requireNonNull(getActivity()).finish();
             }
         });
 
@@ -59,6 +64,7 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
                 dismiss();
                 sortStyle = 4;
                 startActivity(new Intent(getActivity(), ListActivity.class));
+                Objects.requireNonNull(getActivity()).finish();
             }
         });
 

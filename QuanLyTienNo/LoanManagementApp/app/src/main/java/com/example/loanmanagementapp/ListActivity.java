@@ -102,6 +102,7 @@ public class ListActivity extends AppCompatActivity {
 //                    Log.d("searching ID:",String.valueOf(Id));
                 }
                 Intent goToPersonalInfo = new Intent(ListActivity.this, PersonalInfoActivity.class);
+                goToPersonalInfo.putExtra("sourceActivity", ActivityName.LOAN_LIST);
                 goToPersonalInfo.putExtra("debtorId", selectedId);
                 startActivity(goToPersonalInfo);
             }
@@ -260,9 +261,10 @@ public class ListActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(ListActivity.this, "Xảy ra lỗi khi xóa", Toast.LENGTH_LONG).show();
                 }
-                Intent reloadLoanList = new Intent(ListActivity.this, ListActivity.class);
-                startActivity(reloadLoanList);
-                finish();
+//                Intent reloadLoanList = new Intent(ListActivity.this, ListActivity.class);
+//                startActivity(reloadLoanList);
+//                finish();
+                recreate();
             }
         });
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {

@@ -94,12 +94,12 @@ public class AddNewLoanActivity extends AppCompatActivity {
                         dbManager.addDebtor(debtor);
                         Toast.makeText(AddNewLoanActivity.this, "Thêm thành công!", Toast.LENGTH_LONG).show();
 
-                        Intent finishOldLoanList, goToList;
+                        if (sourceActivity == ActivityName.LOAN_LIST) {
+                            Intent finishOldLoanList = new Intent("finish_loan_list_activity");
+                            sendBroadcast(finishOldLoanList);
+                        }
 
-                        finishOldLoanList = new Intent("finish_loan_list_activity");
-                        sendBroadcast(finishOldLoanList);
-
-                        goToList = new Intent(AddNewLoanActivity.this, ListActivity.class);
+                        Intent goToList = new Intent(AddNewLoanActivity.this, ListActivity.class);
                         startActivity(goToList);
 
                         finish();
@@ -110,12 +110,12 @@ public class AddNewLoanActivity extends AppCompatActivity {
                             Toast.makeText(AddNewLoanActivity.this, "Có lỗi khi sửa nợ! Vui lòng thử lại", Toast.LENGTH_LONG).show();
                         }
 
-                        Intent finishOldPersonalInfo, goToPersonalInfo;
+                        if (sourceActivity == ActivityName.PERSONAL_INFO) {
+                            Intent finishOldPersonalInfo = new Intent("finish_personal_info_activity");
+                            sendBroadcast(finishOldPersonalInfo);
+                        }
 
-                        finishOldPersonalInfo = new Intent("finish_personal_info_activity");
-                        sendBroadcast(finishOldPersonalInfo);
-
-                        goToPersonalInfo = new Intent(AddNewLoanActivity.this, PersonalInfoActivity.class);
+                        Intent goToPersonalInfo = new Intent(AddNewLoanActivity.this, PersonalInfoActivity.class);
                         goToPersonalInfo.putExtra("debtorId", debtorId);
                         startActivity(goToPersonalInfo);
 
@@ -278,44 +278,17 @@ public class AddNewLoanActivity extends AppCompatActivity {
     private boolean checkValue() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Lỗi");
-        if (edtName.getText().toString().isEmpty()) {
-            builder.setMessage("Vui lòng nhập tên!");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+        if (edtName.getText().toString().equals("")) {
+            Toast.makeText(AddNewLoanActivity.this, "Vui lòng nhập tên", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (edtDebt.getText().toString().isEmpty()) {
-            builder.setMessage("Vui lòng nhập số tiền nợ!");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+        if (edtDebt.getText().toString().equals("")) {
+            Toast.makeText(AddNewLoanActivity.this, "Vui lòng nhập số tiền nợ", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (edtDate.getText().toString().isEmpty()) {
-            builder.setMessage("Vui lòng chọn ngày vay!");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-            return false;
+        if (edtInterest_rate.getText().toString().equals("")) {
+            edtInterest_rate.setText("0.0");
         }
-        if (edtInterest_rate.toString().isEmpty())
-            edtInterest_rate.setText("0");
         return true;
     }
 }

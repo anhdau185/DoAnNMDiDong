@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 selectedId = listDebtor.get(position).getmID();
 //                    Log.d("searching ID:",String.valueOf(Id));
                 Intent goToPersonalInfo = new Intent(MainActivity.this, PersonalInfoActivity.class);
+                goToPersonalInfo.putExtra("sourceActivity", ActivityName.MAIN);
                 goToPersonalInfo.putExtra("debtorId", selectedId);
                 startActivity(goToPersonalInfo);
             }
@@ -73,19 +74,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Initialize();
-        SetAdapter();
-        lvNotify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedId = listDebtor.get(position).getmID();
-                Intent goToPersonalInfo = new Intent(MainActivity.this, PersonalInfoActivity.class);
-                goToPersonalInfo.putExtra("debtorId", selectedId);
-                startActivity(goToPersonalInfo);
-            }
-        });
+    public void onRestart() {
+        super.onRestart();
+        recreate();
     }
 
     @Override

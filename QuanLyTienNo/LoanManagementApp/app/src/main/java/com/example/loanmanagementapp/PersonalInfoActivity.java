@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.List;
 
 public class PersonalInfoActivity extends AppCompatActivity {
+    private ActivityName sourceActivity;
     private int debtorId;
     private BroadcastReceiver receiver;
 
@@ -86,7 +87,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         };
         registerReceiver(receiver, new IntentFilter("finish_personal_info_activity"));
 
-        debtorId = getIntent().getIntExtra("debtorId", -1);
+        Intent intent = getIntent();
+        sourceActivity = (ActivityName) intent.getSerializableExtra("sourceActivity");
+        debtorId = intent.getIntExtra("debtorId", -1);
 
         Initialize();
 
@@ -359,15 +362,22 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     Toast.makeText(PersonalInfoActivity.this, "Xảy ra lỗi khi xóa", Toast.LENGTH_LONG).show();
                 }
                 dbManager.close();
-                Intent finishOldLoanList, goToList;
 
-                finishOldLoanList = new Intent("finish_loan_list_activity");
-                sendBroadcast(finishOldLoanList);
+                switch (sourceActivity) {
+                    case LOAN_LIST:
+                        Intent finishOldLoanList, goToList;
 
-                goToList = new Intent(PersonalInfoActivity.this, ListActivity.class);
-                startActivity(goToList);
+                        finishOldLoanList = new Intent("finish_loan_list_activity");
+                        sendBroadcast(finishOldLoanList);
 
-                finish();
+                        goToList = new Intent(PersonalInfoActivity.this, ListActivity.class);
+                        startActivity(goToList);
+                        finish();
+                        break;
+                    case MAIN:
+                        finish();
+                        break;
+                }
             }
         });
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
