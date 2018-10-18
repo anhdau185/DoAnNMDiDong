@@ -68,12 +68,12 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
-                if (action != null && action.equals("finish_activity")) {
+                if (action != null && action.equals("finish_loan_list_activity")) {
                     finish();
                 }
             }
         };
-        registerReceiver(receiver, new IntentFilter("finish_activity"));
+        registerReceiver(receiver, new IntentFilter("finish_loan_list_activity"));
 
         Initialize();
         SetAdapter();
@@ -87,7 +87,6 @@ public class ListActivity extends AppCompatActivity {
                 Intent goToAddNewLoan = new Intent(ListActivity.this, AddNewLoanActivity.class);
                 goToAddNewLoan.putExtra("sourceActivity", ActivityName.LOAN_LIST);
                 startActivity(goToAddNewLoan);
-                finish();
             }
         });
 

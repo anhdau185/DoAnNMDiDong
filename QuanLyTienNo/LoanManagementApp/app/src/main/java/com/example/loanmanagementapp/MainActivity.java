@@ -73,6 +73,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        Initialize();
+        SetAdapter();
+        lvNotify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedId = listDebtor.get(position).getmID();
+                Intent goToPersonalInfo = new Intent(MainActivity.this, PersonalInfoActivity.class);
+                goToPersonalInfo.putExtra("debtorId", selectedId);
+                startActivity(goToPersonalInfo);
+            }
+        });
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mMenuInflater = getMenuInflater();
         mMenuInflater.inflate(R.menu.main_activity_menu, menu);

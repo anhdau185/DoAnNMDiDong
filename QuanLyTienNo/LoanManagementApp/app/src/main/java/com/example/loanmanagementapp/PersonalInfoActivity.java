@@ -1,7 +1,10 @@
 package com.example.loanmanagementapp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -42,6 +45,7 @@ import java.util.List;
 
 public class PersonalInfoActivity extends AppCompatActivity {
     private int debtorId;
+    private BroadcastReceiver receiver;
 
     private DBManager dbManager;
     private List<DebtorDetail> details;
@@ -71,9 +75,20 @@ public class PersonalInfoActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (action != null && action.equals("finish_personal_info_activity")) {
+                    finish();
+                }
+            }
+        };
+        registerReceiver(receiver, new IntentFilter("finish_personal_info_activity"));
+
         debtorId = getIntent().getIntExtra("debtorId", -1);
 
-        initialize();
+        Initialize();
 
         payLoanBottomSheet = new PayLoanBottomSheetDialogFragment();
         payLoanBottomSheet.setDebtor(this);
@@ -127,7 +142,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 goToEditLoan.putExtra("sourceActivity", ActivityName.PERSONAL_INFO);
                 goToEditLoan.putExtra("debtorId", debtorId);
                 startActivity(goToEditLoan);
-                finish();
                 break;
             case R.id.homeAsUp:
 //                Log.d("Reset ID:", ListActivity.Id + "");
@@ -140,7 +154,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
-    private void initialize() {
+    private void Initialize() {
         dbManager = new DBManager(this);
         Debtor debtor = dbManager.getDebtorById(debtorId);
         details = new ArrayList<>();
@@ -202,7 +216,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     debtor.setmInterest_date(date);
                     if (dbManager.UpdateDebtor(debtor))
                         Toast.makeText(PersonalInfoActivity.this, "Xóa lãi thành công!", Toast.LENGTH_LONG).show();
-                    initialize();
+                    Initialize();
                     dbManager.close();
                 }
             });
@@ -247,7 +261,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 debtor.setmDebt(0);
                 if (dbManager.UpdateDebtor(debtor))
                     Toast.makeText(PersonalInfoActivity.this, "Đã hoàn tất khoản nợ!", Toast.LENGTH_LONG).show();
-                initialize();
+                Initialize();
                 dbManager.close();
             }
         });
@@ -314,7 +328,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                             debtor.setmInterest_date(date);
                             if (dbManager.UpdateDebtor(debtor))
                                 Toast.makeText(PersonalInfoActivity.this, "Thêm nợ thành công!", Toast.LENGTH_LONG).show();
-                            initialize();
+                            Initialize();
                             dbManager.close();
                         }
                     })
@@ -347,7 +361,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 dbManager.close();
                 Intent finishOldLoanList, goToList;
 
-                finishOldLoanList = new Intent("finish_activity");
+                finishOldLoanList = new Intent("finish_loan_list_activity");
                 sendBroadcast(finishOldLoanList);
 
                 goToList = new Intent(PersonalInfoActivity.this, ListActivity.class);
@@ -374,5 +388,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public void sendSMS() {
         Intent sendSMS = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + dbManager.getDebtorById(debtorId).getmPhone()));
         startActivity(sendSMS);
+    }
+
+    @Override
+    public void onDestroy() {
+        if (receiver != null)
+            unregisterReceiver(receiver);
+        super.onDestroy();
     }
 }

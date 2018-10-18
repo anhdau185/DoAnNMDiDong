@@ -58,11 +58,12 @@ public class AddNewLoanActivity extends AppCompatActivity {
         android.support.v7.widget.Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_addNewLoan);
         setSupportActionBar(mToolbar);
 
-        Initialize();
-
         Intent intent = getIntent();
         sourceActivity = (ActivityName) intent.getSerializableExtra("sourceActivity");
         debtorId = intent.getIntExtra("debtorId", -1);
+
+        Initialize();
+
         if (debtorId < 0) {
             mToolbar.setTitle("Thêm nợ mới");
             edtName.requestFocus();
@@ -82,34 +83,9 @@ public class AddNewLoanActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent goToList, goToPersonalInfo;
-        goToList = new Intent(AddNewLoanActivity.this, ListActivity.class);
-        goToPersonalInfo = new Intent(AddNewLoanActivity.this, PersonalInfoActivity.class);
-
         switch (item.getItemId()) {
             case R.id.action_cancel:
-                if (debtorId < 0) {
-                    switch (sourceActivity) {
-                        case MAIN:
-                            finish();
-                            break;
-                        case LOAN_LIST:
-                            startActivity(goToList);
-                            finish();
-                            break;
-                    }
-                } else {
-                    switch (sourceActivity) {
-                        case LOAN_LIST:
-                            finish();
-                            break;
-                        case PERSONAL_INFO:
-                            goToPersonalInfo.putExtra("debtorId", debtorId);
-                            startActivity(goToPersonalInfo);
-                            finish();
-                            break;
-                    }
-                }
+                finish();
                 return true;
             case R.id.action_save:
                 Debtor debtor = createDebtor();
@@ -117,7 +93,15 @@ public class AddNewLoanActivity extends AppCompatActivity {
                     if (debtorId < 0) {
                         dbManager.addDebtor(debtor);
                         Toast.makeText(AddNewLoanActivity.this, "Thêm thành công!", Toast.LENGTH_LONG).show();
+
+                        Intent finishOldLoanList, goToList;
+
+                        finishOldLoanList = new Intent("finish_loan_list_activity");
+                        sendBroadcast(finishOldLoanList);
+
+                        goToList = new Intent(AddNewLoanActivity.this, ListActivity.class);
                         startActivity(goToList);
+
                         finish();
                     } else {
                         if (dbManager.UpdateDebtor(debtor)) {
@@ -125,8 +109,16 @@ public class AddNewLoanActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(AddNewLoanActivity.this, "Có lỗi khi sửa nợ! Vui lòng thử lại", Toast.LENGTH_LONG).show();
                         }
+
+                        Intent finishOldPersonalInfo, goToPersonalInfo;
+
+                        finishOldPersonalInfo = new Intent("finish_personal_info_activity");
+                        sendBroadcast(finishOldPersonalInfo);
+
+                        goToPersonalInfo = new Intent(AddNewLoanActivity.this, PersonalInfoActivity.class);
                         goToPersonalInfo.putExtra("debtorId", debtorId);
                         startActivity(goToPersonalInfo);
+
                         finish();
                     }
                 }
@@ -184,14 +176,21 @@ public class AddNewLoanActivity extends AppCompatActivity {
 
         edtDate = findViewById(R.id.add_loan_date);
         btnSelectDate = findViewById(R.id.add_select_date);
-        btnSelectDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectDate();
-            }
-        });
 
         edtDescription = findViewById(R.id.add_loan_description);
+
+        if (debtorId < 0) {
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            edtDate.setText(formatter.format(calendar.getTime()));
+
+            btnSelectDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectDate();
+                }
+            });
+        }
     }
 
     @Override
