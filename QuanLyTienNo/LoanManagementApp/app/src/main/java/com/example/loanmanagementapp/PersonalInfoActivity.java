@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -93,10 +94,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         Initialize();
 
-        payLoanBottomSheet = new PayLoanBottomSheetDialogFragment();
-        payLoanBottomSheet.setDebtor(this);
         contactDebtorBottomSheet = new ContactBottomSheetDialogFragment();
-        contactDebtorBottomSheet.setDebtor(this);
+        contactDebtorBottomSheet.setDebtor(PersonalInfoActivity.this);
 
         btnAddDebt = (Button) findViewById(R.id.debtor_add_debt_btn);
         // Su kien nut 'Them no'
@@ -115,6 +114,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 if (dbManager.getDebtorById(debtorId).getmInterest_rate() == 0) {
                     payDebtAndInterest();
                 } else {
+                    payLoanBottomSheet = new PayLoanBottomSheetDialogFragment();
+                    payLoanBottomSheet.setDebtor(PersonalInfoActivity.this);
                     payLoanBottomSheet.show(getSupportFragmentManager(), "pay_loan_action");
                 }
             }
@@ -294,6 +295,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
             alertDialogBuilderUserInput.setView(mView);
 
             final EditText edtAddDebt = (EditText) mView.findViewById(R.id.userInputDialog);
+            edtAddDebt.requestFocus();
+
             //Format dau phay don vi ngan
             edtAddDebt.addTextChangedListener(new TextWatcher() {
                 private String current = " ";

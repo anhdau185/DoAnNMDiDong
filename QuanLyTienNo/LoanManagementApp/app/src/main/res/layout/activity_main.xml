@@ -33,7 +33,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tổng tiền nợ"
+            android:text="Tổng tiền nợ gốc"
             android:textAllCaps="true"
             android:textSize="16sp"
             tools:ignore="HardcodedText" />

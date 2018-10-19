@@ -1,6 +1,5 @@
 package com.example.loanmanagementapp;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -29,7 +27,6 @@ import com.example.loanmanagementapp.model.ActivityName;
 import com.example.loanmanagementapp.model.Debtor;
 
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -78,6 +75,11 @@ public class AddNewLoanActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mMenuInflater = getMenuInflater();
         mMenuInflater.inflate(R.menu.add_new_loan_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_info);
+        if (debtorId < 0)
+            item.setVisible(true);
+        else
+            item.setVisible(false);
         return true;
     }
 
@@ -125,6 +127,23 @@ public class AddNewLoanActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+            case R.id.action_info:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                String textToDisplay =
+                        "- Trường 'Tên' và 'Số tiền nợ' không được bỏ trống." +
+                        "\n- Trường 'Lãi suất' bỏ trống sẽ tự hiểu là lãi suất 0%." +
+                        "\n- Các trường 'Tên', 'Số tiền nợ', 'Lãi suất' và 'Ngày vay' không thể chỉnh sửa sau khi đã lưu.";
+                builder.setTitle("Quy định");
+                builder.setMessage(textToDisplay);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                return true;
         }
     }
 

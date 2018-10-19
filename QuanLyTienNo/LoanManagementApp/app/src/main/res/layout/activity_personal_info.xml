@@ -21,7 +21,7 @@
     <LinearLayout
         android:id="@+id/general_loan_info"
         android:layout_width="match_parent"
-        android:layout_height="118dp"
+        android:layout_height="110dp"
         android:layout_below="@+id/toolbar_PersonalInfo"
         android:gravity="center">
 
@@ -56,7 +56,8 @@
         android:layout_above="@id/action_buttons"
         android:layout_below="@id/general_loan_info"
         android:divider="@color/lightGrey"
-        android:dividerHeight="0px" />
+        android:dividerHeight="0px"
+        android:paddingBottom="3dp" />
 
     <LinearLayout
         android:id="@+id/action_buttons"
