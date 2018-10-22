@@ -13,18 +13,15 @@ import com.example.loanmanagementapp.R;
 
 public class PayLoanBottomSheetDialogFragment extends BottomSheetDialogFragment {
     private TextView payInterestOnly, payLoanAndInterest;
-    private PersonalInfoActivity debtor;
 
-    public static PayLoanBottomSheetDialogFragment newInstance(PersonalInfoActivity debtor) {
-        PayLoanBottomSheetDialogFragment payLoanBottomSheetDialogFragment = new PayLoanBottomSheetDialogFragment();
-        payLoanBottomSheetDialogFragment.debtor = debtor;
-        return payLoanBottomSheetDialogFragment;
+    public static PayLoanBottomSheetDialogFragment newInstance() {
+        return new PayLoanBottomSheetDialogFragment();
     }
 
     @Override
     @Nullable
     public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container,
+                             @Nullable final ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.personal_info_pay_loan, container, false);
@@ -35,7 +32,10 @@ public class PayLoanBottomSheetDialogFragment extends BottomSheetDialogFragment 
             @Override
             public void onClick(View v) {
                 dismiss();
-                debtor.payInterest();
+                PersonalInfoActivity currentActivity = (PersonalInfoActivity) getActivity();
+                if (currentActivity != null) {
+                    currentActivity.payInterest();
+                }
             }
         });
 
@@ -44,7 +44,10 @@ public class PayLoanBottomSheetDialogFragment extends BottomSheetDialogFragment 
             @Override
             public void onClick(View v) {
                 dismiss();
-                debtor.payDebtAndInterest();
+                PersonalInfoActivity currentActivity = (PersonalInfoActivity) getActivity();
+                if (currentActivity != null) {
+                    currentActivity.payDebtAndInterest();
+                }
             }
         });
         return v;

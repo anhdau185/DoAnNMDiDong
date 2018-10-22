@@ -19,7 +19,7 @@
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:gravity="center_vertical"
-        android:text="Trừ lãi"
+        android:text="Trừ tiền lãi"
         android:textColor="@color/black"
         android:textSize="16sp" />
 
@@ -29,7 +29,7 @@
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:gravity="center_vertical"
-        android:text="Trừ tiền gốc + lãi (hoàn tất nợ)"
+        android:text="Hoàn tất khoản nợ"
         android:textColor="@color/black"
         android:textSize="16sp" />
 

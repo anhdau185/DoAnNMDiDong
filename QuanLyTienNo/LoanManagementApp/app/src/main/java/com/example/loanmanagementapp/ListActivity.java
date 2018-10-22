@@ -260,9 +260,6 @@ public class ListActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(ListActivity.this, "Xảy ra lỗi khi xóa", Toast.LENGTH_LONG).show();
                 }
-//                Intent reloadLoanList = new Intent(ListActivity.this, ListActivity.class);
-//                startActivity(reloadLoanList);
-//                finish();
                 recreate();
             }
         });

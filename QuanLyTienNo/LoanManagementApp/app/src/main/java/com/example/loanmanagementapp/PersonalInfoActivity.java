@@ -44,6 +44,9 @@ import java.util.List;
 public class PersonalInfoActivity extends AppCompatActivity {
     private ActivityName sourceActivity;
     private int debtorId;
+    public int getDebtorId() {
+        return debtorId;
+    }
     private BroadcastReceiver receiver;
 
     private DBManager dbManager;
@@ -112,7 +115,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     }
                     ft.addToBackStack(null);
 
-                    PayLoanBottomSheetDialogFragment payLoanBottomSheet = PayLoanBottomSheetDialogFragment.newInstance(PersonalInfoActivity.this);
+                    PayLoanBottomSheetDialogFragment payLoanBottomSheet = PayLoanBottomSheetDialogFragment.newInstance();
                     payLoanBottomSheet.show(getSupportFragmentManager(), "pay_loan_action");
                 }
             }
@@ -130,7 +133,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 }
                 ft.addToBackStack(null);
 
-                ContactBottomSheetDialogFragment contactDebtorBottomSheet = ContactBottomSheetDialogFragment.newInstance(PersonalInfoActivity.this);
+                ContactBottomSheetDialogFragment contactDebtorBottomSheet = ContactBottomSheetDialogFragment.newInstance();
                 contactDebtorBottomSheet.show(getSupportFragmentManager(), "contact_debtor_action");
             }
         });
@@ -200,18 +203,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         String interest = String.valueOf(formatter.format((int) dbManager.calculateInterest(debtor)));
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (dbManager.calculateInterest(debtor) == 0) {
-            builder.setTitle("Trả lãi");
-            builder.setMessage("Tiền lãi đã được thanh toán!");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+            Toast.makeText(PersonalInfoActivity.this, "Chưa có tiền lãi để thanh toán", Toast.LENGTH_LONG).show();
         } else {
-            builder.setTitle("Trả lãi");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Trừ tiền lãi");
             builder.setMessage("Tiền lãi hiện tại: " + interest +
                     "\nBạn có chắc chắn muốn xóa tiền lãi cho khoản nợ này?");
 
@@ -235,9 +231,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     dialog.cancel();
                 }
             });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 
     public void payDebtAndInterest() {
@@ -251,11 +247,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (dbManager.calculateInterest(debtor) == 0) {
-            builder.setTitle("Trả nợ");
+            builder.setTitle("Hoàn tất khoản nợ");
             builder.setMessage("Tiền nợ gốc: " + loanAmount +
                     "\nBạn có chắc chắn muốn hoàn tất khoản nợ này?");
         } else {
-            builder.setTitle("Trả nợ gốc + lãi");
+            builder.setTitle("Hoàn tất khoản nợ");
             builder.setMessage("Tiền nợ gốc: " + loanAmount +
                     "\nTiền lãi hiện tại: " + interest +
                     "\nBạn có chắc chắn muốn hoàn tất khoản nợ này?");
