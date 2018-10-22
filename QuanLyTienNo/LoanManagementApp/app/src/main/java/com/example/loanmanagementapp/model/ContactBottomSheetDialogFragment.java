@@ -15,10 +15,14 @@ public class ContactBottomSheetDialogFragment extends BottomSheetDialogFragment 
     private TextView makeACall, sendSmsMessage;
     private PersonalInfoActivity debtor;
 
-    public void setDebtor(PersonalInfoActivity debtor) {
-        this.debtor = debtor;
+    public static ContactBottomSheetDialogFragment newInstance(PersonalInfoActivity debtor) {
+        ContactBottomSheetDialogFragment contactBottomSheetDialogFragment = new ContactBottomSheetDialogFragment();
+        contactBottomSheetDialogFragment.debtor = debtor;
+        return contactBottomSheetDialogFragment;
     }
 
+    @Override
+    @Nullable
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

@@ -11,10 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.loanmanagementapp.R;
-import com.example.loanmanagementapp.model.Debtor;
 import com.example.loanmanagementapp.model.DebtorDetail;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class DebtorDetailAdapter extends ArrayAdapter<DebtorDetail> {

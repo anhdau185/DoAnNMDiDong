@@ -5,22 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.nfc.Tag;
-import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.example.loanmanagementapp.ListActivity;
 import com.example.loanmanagementapp.model.Debtor;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CompletionStage;
 
 public class DBManager extends SQLiteOpenHelper {
     private final String TAG = "DBManager";

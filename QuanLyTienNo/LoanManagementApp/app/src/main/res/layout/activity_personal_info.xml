@@ -43,7 +43,7 @@
                 android:id="@+id/debtor_debt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="300,000"
+                android:text="000,000"
                 android:textColor="@color/colorPrimary"
                 android:textSize="44sp" />
         </LinearLayout>

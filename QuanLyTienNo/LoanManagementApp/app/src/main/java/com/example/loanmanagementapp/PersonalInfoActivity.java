@@ -7,14 +7,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,15 +33,12 @@ import com.example.loanmanagementapp.model.ContactBottomSheetDialogFragment;
 import com.example.loanmanagementapp.model.Debtor;
 import com.example.loanmanagementapp.model.DebtorDetail;
 import com.example.loanmanagementapp.model.PayLoanBottomSheetDialogFragment;
-import com.example.loanmanagementapp.model.SortBottomSheetDialogFragment;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class PersonalInfoActivity extends AppCompatActivity {
@@ -64,9 +61,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private Button btnAddDebt;
     private Button btnPayDebt;
     private Button btnContactDebtor;
-
-    private PayLoanBottomSheetDialogFragment payLoanBottomSheet;
-    private ContactBottomSheetDialogFragment contactDebtorBottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +88,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         Initialize();
 
-        contactDebtorBottomSheet = new ContactBottomSheetDialogFragment();
-        contactDebtorBottomSheet.setDebtor(PersonalInfoActivity.this);
-
         btnAddDebt = (Button) findViewById(R.id.debtor_add_debt_btn);
         // Su kien nut 'Them no'
         btnAddDebt.setOnClickListener(new View.OnClickListener() {
@@ -114,8 +105,14 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 if (dbManager.getDebtorById(debtorId).getmInterest_rate() == 0) {
                     payDebtAndInterest();
                 } else {
-                    payLoanBottomSheet = new PayLoanBottomSheetDialogFragment();
-                    payLoanBottomSheet.setDebtor(PersonalInfoActivity.this);
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    Fragment prev = getSupportFragmentManager().findFragmentByTag("pay_loan_action");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+
+                    PayLoanBottomSheetDialogFragment payLoanBottomSheet = PayLoanBottomSheetDialogFragment.newInstance(PersonalInfoActivity.this);
                     payLoanBottomSheet.show(getSupportFragmentManager(), "pay_loan_action");
                 }
             }
@@ -126,7 +123,15 @@ public class PersonalInfoActivity extends AppCompatActivity {
         btnContactDebtor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                contactDebtorBottomSheet.show(getSupportFragmentManager(), "contact_debtor");
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment prev = getSupportFragmentManager().findFragmentByTag("contact_debtor_action");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                ContactBottomSheetDialogFragment contactDebtorBottomSheet = ContactBottomSheetDialogFragment.newInstance(PersonalInfoActivity.this);
+                contactDebtorBottomSheet.show(getSupportFragmentManager(), "contact_debtor_action");
             }
         });
     }

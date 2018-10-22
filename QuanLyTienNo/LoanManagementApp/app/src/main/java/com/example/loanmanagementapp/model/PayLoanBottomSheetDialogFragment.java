@@ -1,10 +1,11 @@
 package com.example.loanmanagementapp.model;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.loanmanagementapp.PersonalInfoActivity;
@@ -14,10 +15,14 @@ public class PayLoanBottomSheetDialogFragment extends BottomSheetDialogFragment 
     private TextView payInterestOnly, payLoanAndInterest;
     private PersonalInfoActivity debtor;
 
-    public void setDebtor(PersonalInfoActivity debtor) {
-        this.debtor = debtor;
+    public static PayLoanBottomSheetDialogFragment newInstance(PersonalInfoActivity debtor) {
+        PayLoanBottomSheetDialogFragment payLoanBottomSheetDialogFragment = new PayLoanBottomSheetDialogFragment();
+        payLoanBottomSheetDialogFragment.debtor = debtor;
+        return payLoanBottomSheetDialogFragment;
     }
 
+    @Override
+    @Nullable
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -43,9 +48,5 @@ public class PayLoanBottomSheetDialogFragment extends BottomSheetDialogFragment 
             }
         });
         return v;
-    }
-
-    public void onDismiss(DialogInterface dialog) {
-
     }
 }

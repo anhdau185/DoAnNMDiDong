@@ -17,6 +17,12 @@ public class SortBottomSheetDialogFragment extends BottomSheetDialogFragment {
 
     public static int sortStyle = -1;
 
+    public static SortBottomSheetDialogFragment newInstance() {
+        return new SortBottomSheetDialogFragment();
+    }
+
+    @Override
+    @Nullable
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

@@ -1,9 +1,5 @@
 package com.example.loanmanagementapp.model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Debtor {
     private int mID;
     private String mName;

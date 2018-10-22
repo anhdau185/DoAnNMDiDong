@@ -6,8 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,18 +27,12 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.loanmanagementapp.adapter.CustomAdapter;
-import com.example.loanmanagementapp.adapter.DebtorDetailAdapter;
 import com.example.loanmanagementapp.database.DBManager;
 import com.example.loanmanagementapp.model.ActivityName;
 import com.example.loanmanagementapp.model.Debtor;
-import com.example.loanmanagementapp.model.DebtorDetail;
 import com.example.loanmanagementapp.model.SortBottomSheetDialogFragment;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class ListActivity extends AppCompatActivity {
     private int selectedId;
@@ -52,8 +47,6 @@ public class ListActivity extends AppCompatActivity {
     private int[] listID;
     private boolean isSearching = false;
     ArrayAdapter<String> adapter;
-
-    SortBottomSheetDialogFragment sortBottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +70,6 @@ public class ListActivity extends AppCompatActivity {
 
         Initialize();
         SetAdapter();
-
-        sortBottomSheet = new SortBottomSheetDialogFragment();
 
         mfbtn = findViewById(R.id.list_add_btn);
         mfbtn.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +156,14 @@ public class ListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sort:
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment prev = getSupportFragmentManager().findFragmentByTag("list_sort_action");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                SortBottomSheetDialogFragment sortBottomSheet = SortBottomSheetDialogFragment.newInstance();
                 sortBottomSheet.show(getSupportFragmentManager(), "list_sort_action");
                 return true;
             default:
