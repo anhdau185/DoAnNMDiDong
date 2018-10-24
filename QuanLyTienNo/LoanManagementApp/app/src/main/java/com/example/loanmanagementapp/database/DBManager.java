@@ -305,7 +305,8 @@ public class DBManager extends SQLiteOpenHelper {
                 int today = calendar.get(Calendar.DATE);
                 if (debtor.getmDate().length() > 5 && debtor.getmInterest_rate() != 0) {
 //                    Log.d("Check:", debtor.getmName() + debtor.getmDate().substring(0,2));
-                    if ((today == Integer.valueOf(debtor.getmDate().substring(0, 2)) || totalDay >= 30))
+                    if ((today == Integer.valueOf(debtor.getmDate().substring(0, 2)) && totalDay >= 28) ||
+                            (today > Integer.valueOf(debtor.getmDate().substring(0, 2)) && totalDay >= 29))
                         ListDebtor.add(debtor);
                 }
             } while (cursor.moveToNext());
