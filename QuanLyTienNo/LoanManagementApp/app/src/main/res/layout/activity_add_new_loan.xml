@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Tên"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:textSize="16sp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -85,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Địa chỉ"
-                    android:inputType="textMultiLine"
+                    android:inputType="textCapSentences|textMultiLine"
                     android:textSize="16sp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -161,7 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Mô tả"
-                    android:inputType="textMultiLine"
+                    android:inputType="textCapSentences|textMultiLine"
                     android:textSize="16sp" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
