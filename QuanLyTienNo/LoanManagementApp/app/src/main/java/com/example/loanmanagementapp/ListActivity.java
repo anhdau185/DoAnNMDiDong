@@ -61,12 +61,19 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
-                if (action != null && action.equals("finish_loan_list_activity")) {
-                    finish();
+                if (action != null) {
+                    if (action.equals("recreate_loan_list_activity")) {
+                        recreate();
+                    } else if (action.equals("finish_loan_list_activity")) {
+                        finish();
+                    }
                 }
             }
         };
-        registerReceiver(receiver, new IntentFilter("finish_loan_list_activity"));
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("recreate_loan_list_activity");
+        intentFilter.addAction("finish_loan_list_activity");
+        registerReceiver(receiver, intentFilter);
 
         Initialize();
         SetAdapter();

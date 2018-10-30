@@ -44,9 +44,11 @@ import java.util.List;
 public class PersonalInfoActivity extends AppCompatActivity {
     private ActivityName sourceActivity;
     private int debtorId;
+
     public int getDebtorId() {
         return debtorId;
     }
+
     private BroadcastReceiver receiver;
 
     private DBManager dbManager;
@@ -268,6 +270,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     Toast.makeText(PersonalInfoActivity.this, "Đã hoàn tất khoản nợ!", Toast.LENGTH_LONG).show();
                 Initialize();
                 dbManager.close();
+
+                sendBroadcast(new Intent("recreate_loan_list_activity"));
             }
         });
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -337,6 +341,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                                 Toast.makeText(PersonalInfoActivity.this, "Thêm nợ thành công!", Toast.LENGTH_LONG).show();
                             Initialize();
                             dbManager.close();
+
+                            sendBroadcast(new Intent("recreate_loan_list_activity"));
                         }
                     })
                     .setNegativeButton("Hủy",
@@ -367,21 +373,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 }
                 dbManager.close();
 
-                switch (sourceActivity) {
-                    case LOAN_LIST:
-                        Intent finishOldLoanList, goToList;
-
-                        finishOldLoanList = new Intent("finish_loan_list_activity");
-                        sendBroadcast(finishOldLoanList);
-
-                        goToList = new Intent(PersonalInfoActivity.this, ListActivity.class);
-                        startActivity(goToList);
-                        finish();
-                        break;
-                    case MAIN:
-                        finish();
-                        break;
+                if (sourceActivity == ActivityName.LOAN_LIST) {
+                    sendBroadcast(new Intent("recreate_loan_list_activity"));
                 }
+                finish();
             }
         });
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {

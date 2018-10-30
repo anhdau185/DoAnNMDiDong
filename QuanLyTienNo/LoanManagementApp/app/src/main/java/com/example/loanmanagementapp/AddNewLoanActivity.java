@@ -96,14 +96,14 @@ public class AddNewLoanActivity extends AppCompatActivity {
                         dbManager.addDebtor(debtor);
                         Toast.makeText(AddNewLoanActivity.this, "Thêm thành công!", Toast.LENGTH_LONG).show();
 
-                        if (sourceActivity == ActivityName.LOAN_LIST) {
-                            Intent finishOldLoanList = new Intent("finish_loan_list_activity");
-                            sendBroadcast(finishOldLoanList);
+                        switch (sourceActivity) {
+                            case LOAN_LIST:
+                                sendBroadcast(new Intent("recreate_loan_list_activity"));
+                                break;
+                            case MAIN:
+                                startActivity(new Intent(AddNewLoanActivity.this, ListActivity.class));
+                                break;
                         }
-
-                        Intent goToList = new Intent(AddNewLoanActivity.this, ListActivity.class);
-                        startActivity(goToList);
-
                         finish();
                     } else {
                         if (dbManager.UpdateDebtor(debtor)) {
@@ -131,8 +131,8 @@ public class AddNewLoanActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 String textToDisplay =
                         "- Trường 'Tên' và 'Số tiền nợ' không được bỏ trống." +
-                        "\n- Trường 'Lãi suất' bỏ trống sẽ tự hiểu là lãi suất 0%." +
-                        "\n- Các trường 'Tên', 'Số tiền nợ', 'Lãi suất' và 'Ngày vay' không thể chỉnh sửa sau khi đã lưu.";
+                                "\n- Trường 'Lãi suất' bỏ trống sẽ tự hiểu là lãi suất 0%." +
+                                "\n- Các trường 'Tên', 'Số tiền nợ', 'Lãi suất' và 'Ngày vay' không thể chỉnh sửa sau khi đã lưu.";
                 builder.setTitle("Quy định");
                 builder.setMessage(textToDisplay);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
