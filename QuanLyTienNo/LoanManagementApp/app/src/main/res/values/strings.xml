@@ -1,11 +1,20 @@
 <resources>
     <string name="app_name">Quản lý tiền nợ</string>
     <string name="menu_settings">Settings</string>
-    <string name="menu_about_us">Thông tin tác giả</string>
+    <string name="about_us">Thông tin tác giả</string>
+    <string name="help">Trợ giúp</string>
     <string name="add_new_loan">Thêm nợ mới</string>
     <string name="loan_list">Danh sách nợ</string>
     <string name="upcoming_payers">Ai sắp trả nợ?</string>
     <string name="total_loan_amount">000,000</string>
     <string name="sort">Sắp xếp</string>
     <string name="edit_loan">Chỉnh sửa nợ</string>
+    <string name="app_name_en">Loan management</string>
+    <string name="app_introduction">Đồ án môn Nhập môn ứng dụng di động</string>
+
+    <string name="about_teacher_name">Phan Nguyệt Minh</string>
+    <string name="about_teammate_1">Tăng Hoàng Ân - ID: 16520020</string>
+    <string name="about_teammate_2">Đậu Đức Việt Anh - ID: 16520029</string>
+    <string name="about_teammate_3">Trần Xuân Bắc - ID: 16520069</string>
+    <string name="about_contact_email">antanghoang@gmail.com</string>
 </resources>

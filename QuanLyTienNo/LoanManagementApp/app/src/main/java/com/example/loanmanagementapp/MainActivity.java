@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -86,6 +87,20 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_help:
+
+                return true;
+            case R.id.action_about_us:
+                Intent goToAbout = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(goToAbout);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 //    public b
 
     private void Initialize() {

@@ -179,7 +179,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
         details.add(new DebtorDetail("Địa chỉ", debtor.getmAddress()));
         details.add(new DebtorDetail("Lãi suất (%/năm)", String.valueOf(debtor.getmInterest_rate())));
         details.add(new DebtorDetail("Tiền lãi hiện tại", String.valueOf(formatter.format((int) dbManager.calculateInterest(debtor)))));
-        details.add(new DebtorDetail("Ngày vay", String.valueOf(debtor.getmInterest_date())));
+        details.add(new DebtorDetail("Ngày vay", debtor.getmDate()));
+        details.add(new DebtorDetail("Trả lãi gần nhất", debtor.getmInterest_date()));
         details.add(new DebtorDetail("Mô tả", debtor.getmDescription()));
         debtorDetailAdapter = new DebtorDetailAdapter(this, R.layout.personal_info_debtor_detail_item, details);
 

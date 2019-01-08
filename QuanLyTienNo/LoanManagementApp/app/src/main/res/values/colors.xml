@@ -13,4 +13,5 @@
     <color name="darkerLightGrey">#c5c5c5</color>
     <color name="text">#333333</color>
     <color name="black">#000000</color>
+    <color name="about_regular_text">#333333</color>
 </resources>
