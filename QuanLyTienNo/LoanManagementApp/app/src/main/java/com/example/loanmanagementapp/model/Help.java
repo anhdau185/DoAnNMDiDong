@@ -1,16 +1,12 @@
 package com.example.loanmanagementapp.model;
 
 public class Help {
-    private int helpId;
     private String title;
     private String content;
 
-    public int getHelpId() {
-        return helpId;
-    }
-
-    public void setHelpId(int helpId) {
-        this.helpId = helpId;
+    public Help(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 
     public String getTitle() {

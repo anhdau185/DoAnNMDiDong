@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.design.widget.TabLayout;
 import android.util.Log;
 
 import com.example.loanmanagementapp.model.Debtor;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class DBManager extends SQLiteOpenHelper {
     private final String TAG = "DBManager";
-    private static final String DATABASE_NAME = "loan_manager";
+    private static final String DATABASE_NAME = "loan_manager.db";
     private static final String TABLE_NAME = "debtors";
     private static final String ID = "id";
     private static final String NAME = "name";
@@ -33,11 +32,6 @@ public class DBManager extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private Context context;
 
-    private String TABLE_HELP = "help";
-    private String COLUMN_HELP_ID = "help_id";
-    private String COLUMN_HELP_TITLE = "help_title";
-    private String COLUMN_HELP_CONTENT = "help_content";
-
     private String SQLquery = "CREATE TABLE " + TABLE_NAME + " (" + ID + " integer primary key, " +
             NAME + " TEXT, " +
             PHONE + " TEXT, " +
@@ -48,12 +42,6 @@ public class DBManager extends SQLiteOpenHelper {
             INTEREST_DATE + " TEXT, " +
             DESCRIPTION + " TEXT)";
 
-    private String createHelpQuery = "CREATE TABLE " + TABLE_HELP + " (" +
-            COLUMN_HELP_ID + " integer PRIMARY KEY, " +
-            COLUMN_HELP_TITLE + " text, " +
-            COLUMN_HELP_CONTENT + " text)";
-
-
     public DBManager(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
         this.context = context;
@@ -63,7 +51,6 @@ public class DBManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQLquery);
-        db.execSQL(createHelpQuery);
         Log.d(TAG, "on Create:");
     }
 

@@ -91,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_help:
-
+                Intent goToHelp = new Intent(MainActivity.this, HelpActivity.class);
+                startActivity(goToHelp);
                 return true;
             case R.id.action_about_us:
                 Intent goToAbout = new Intent(MainActivity.this, AboutActivity.class);

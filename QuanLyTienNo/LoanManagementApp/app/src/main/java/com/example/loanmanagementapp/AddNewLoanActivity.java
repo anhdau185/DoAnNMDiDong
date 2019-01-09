@@ -291,6 +291,7 @@ public class AddNewLoanActivity extends AppCompatActivity {
                 edtDate.setText(simpleDateFormat.format(calendar.getTime()));
             }
         }, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
 

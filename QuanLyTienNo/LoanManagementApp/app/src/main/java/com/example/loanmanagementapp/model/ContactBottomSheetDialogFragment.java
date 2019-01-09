@@ -12,8 +12,6 @@ import com.example.loanmanagementapp.PersonalInfoActivity;
 import com.example.loanmanagementapp.R;
 import com.example.loanmanagementapp.database.DBManager;
 
-import java.util.Objects;
-
 public class ContactBottomSheetDialogFragment extends BottomSheetDialogFragment {
     private TextView makeACall, sendSmsMessage;
 
